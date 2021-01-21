@@ -11,6 +11,10 @@ class ComposerStaticInited8a4f7f03b314e215738404de910417
         array (
             'Services\\' => 9,
         ),
+        'C' => 
+        array (
+            'Controllers\\' => 12,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -18,10 +22,15 @@ class ComposerStaticInited8a4f7f03b314e215738404de910417
         array (
             0 => __DIR__ . '/../..' . '/core/services',
         ),
+        'Controllers\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/core/controllers',
+        ),
     );
 
     public static $classMap = array (
-        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Controllers\\Pessoa' => __DIR__ . '/../..' . '/core/controllers/pessoa.php',
+        'Services\\RouteService' => __DIR__ . '/../..' . '/core/services/routeservice.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
