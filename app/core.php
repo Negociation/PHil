@@ -11,10 +11,11 @@ ini_set('session.cookie_httponly', 1);
 
 // + Adding Autoload 
 // - Desc: Add Autoload include file
-require_once 'vendor/autoload.php';
+require_once  __DIR__.'/vendor/autoload.php';
 
+$teste = new Services\RouteService();
 
-print_r($_SERVER["REQUEST_URI"]); /*REMOVE
+print_r($_SERVER["REQUEST_URI"]); /* REMOVE */
 
 
 ?>

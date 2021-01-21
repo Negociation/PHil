@@ -13,5 +13,10 @@
 		"php": ">=7.2.0",
 		"ext-pdo_mysql": "^7.2",
         "ext-PDO": "^7.2"	
+	},
+	"autoload": {
+		"psr-4": {
+			"Services\\": "./core/services/"
+		}
 	}
 }

@@ -1,13 +1,16 @@
 <?php
 
-class RouteService(){
+namespace Services;
 
-	String requestURI;
+class RouteService{
 
-	__construct(){
-		requestURI = $_SERVER["REQUEST_URI"];
+	public $requestURI;
+
+	function __construct(){
+		$requestURI = $_SERVER["REQUEST_URI"];
+		
+		
 	}
-	
 }
 
 
