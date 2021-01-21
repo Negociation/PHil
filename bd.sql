@@ -1,0 +1,21 @@
+-- DROP DATABASE apirest;
+
+CREATE DATABASE IF NOT EXISTS apirest;
+
+USE apirest;
+
+CREATE TABLE IF NOT EXISTS naturalperson (
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(45) NOT NULL,
+    cpf VARCHAR(15) NOT NULL,
+    rg VARCHAR(15) NOT NULL,
+    uuid VARCHAR(45) NOT NULL,
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE IF NOT EXISTS legalperson (
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(45) NOT NULL,
+    cnpj VARCHAR(15) NOT NULL,
+    PRIMARY KEY(id)
+);
