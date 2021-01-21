@@ -9,6 +9,7 @@ ini_set('max_execution_time', 300);
 // - Desc: Preveting XSS Atacks
 ini_set('session.cookie_httponly', 1);
 
+
 // + Adding Autoload 
 // - Desc: Add Autoload include file
 require_once  __DIR__.'/vendor/autoload.php';
@@ -18,6 +19,7 @@ require_once  __DIR__.'/vendor/autoload.php';
 
 $dbSettings = parse_ini_file(dirname(__DIR__,1).'\app\core\settings.ini', true);
 
+$conn = null;
 
 $erroDb = false;
 try {
@@ -28,10 +30,9 @@ try {
     $erroDb = true;
 }
 
-Services\RouteService::navigateTo(); //REMOVER 
 
 if(!$erroDb){
-	Services\RouteService::navigateTo();
+	Services\RouteService::navigateTo($conn);
 }
 
 
