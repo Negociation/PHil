@@ -1,0 +1,17 @@
+{
+    "name": "kionux/phpapi",
+    "description": "A small php API project",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Marcos T",
+            "email": "32465944+Negociation@users.noreply.github.com"
+        }
+    ],
+    "minimum-stability": "alpha",
+    "require": {
+		"php": ">=7.2.0",
+		"ext-pdo_mysql": "^7.2",
+        "ext-PDO": "^7.2"	
+	}
+}
