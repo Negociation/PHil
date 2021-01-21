@@ -2,6 +2,8 @@
 
 namespace Services;
 
+use PDO;
+
 class DAOService{
 	
 	private $dbConnection;
@@ -10,7 +12,7 @@ class DAOService{
 		
 		$this->dbConnection = $dbConnection;
 		
-		echo "oi";
+
 	}
 	
 	/* SELECTS */

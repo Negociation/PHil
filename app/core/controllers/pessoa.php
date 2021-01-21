@@ -20,8 +20,6 @@ class Pessoa extends ControllerTemplate{
 					http_response_code(422);
 				}
 				
-				
-				print_r($this->dbConnection);
 				echo "DEFAULT GET";
 			break;
 			case 'POST':

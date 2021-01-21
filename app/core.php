@@ -27,7 +27,11 @@ try {
   $conn = new PDO("mysql:host=".$dbSettings['database']['host'].";dbname=".$dbSettings['database']['name'], $dbSettings['database']['user'], $dbSettings['database']['password']);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch(PDOException $e) {
-    $erroDb = true;
+	if( ! empty($conn) ) {
+		$erroDb = true;
+	}
+  $erroDb = true;
+    
 }
 
 

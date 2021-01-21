@@ -10,7 +10,7 @@ class ControllerTemplate{
 	protected $dbConnection;
 	
 	function __construct($conn){
-		$dbConnection = $conn;
+		$this->dbConnection = $conn;
 	}
 	
 }
