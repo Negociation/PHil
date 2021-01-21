@@ -6,6 +6,7 @@ class Pessoa{
 
 
 	public function default(){
+		echo "vivo, oi";
 	}	
 	
 }

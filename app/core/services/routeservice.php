@@ -20,30 +20,43 @@ class RouteService{
 			
 			if(class_exists($parsedURI[0] = "Controllers\\".$parsedURI[0])){
 				if(Method_Exists(new $parsedURI[0](),$parsedURI[1])){
-					echo "Estou Vivo poha uhuuu!!!!";
-				}else{
-					echo "Morto!";
-				}
 					
-				
+					call_user_func_array([new $parsedURI[0](),$parsedURI[1]],$parsedURI[2]);
+					
+				}else{
+					http_response_code(404);
+				}
 			}else{
-				echo "Not Found";
+				http_response_code(404);
 			}
 		}else{
-			echo "nothing";
+			http_response_code(200);
 		}
 	}
 	
 	protected function validateURI($requestURI){
+		$parsedURI;
+		$finalURI = [];
 		
 		$requestURI = strtolower(trim((substr($requestURI, 0,1) == "/" ? substr($_SERVER["REQUEST_URI"],1) : $requestURI)));
 		
 		$parsedURI = explode("/",filter_var($requestURI, FILTER_SANITIZE_URL));	
-			
+		
+		
+		//Add Controller 
+		array_push($finalURI, $parsedURI[0]);
+		
+		//Add Method
 		if(count($parsedURI) == 1){
-			array_push($parsedURI, "default");
+			array_push($finalURI, "default");
+		}else{
+			array_push($finalURI, $parsedURI[1]);
 		}
-		return $parsedURI;
+		
+		//Add Parameters
+		array_push($finalURI,count($parsedURI) > 2 ? array_slice($parsedURI,2) : []);
+		
+		return $finalURI;
 	}
 }
 
