@@ -4,11 +4,13 @@ namespace Controllers;
 
 class Pessoa{
 
-
 	public function default(){
-		echo "vivo, oi";
-	}	
+		
+	}
 	
+	public function id($param){
+		echo $param;
+	}
 }
 
 
