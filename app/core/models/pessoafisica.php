@@ -2,7 +2,7 @@
 
 namespace Models;
 
-class NaturalPerson extends Person
+class PessoaFisica extends Pessoa
 {
     protected $cpf;
     protected $rg;

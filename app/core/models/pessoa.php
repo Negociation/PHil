@@ -2,7 +2,7 @@
 
 namespace Models;
 
-class Person
+class Pessoa
 {
     protected $completeName;
 

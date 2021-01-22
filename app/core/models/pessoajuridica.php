@@ -2,7 +2,7 @@
 
 namespace Models;
 
-class LegalPerson extends Person
+class PessoaJuridica extends Pessoa
 {
     protected $cnpj;
 

@@ -1,8 +1,8 @@
--- DROP DATABASE apirest;
+-- DROP DATABASE apidb;
 
-CREATE DATABASE IF NOT EXISTS apirest;
+CREATE DATABASE IF NOT EXISTS apidb;
 
-USE apirest;
+USE apidb;
 
 CREATE TABLE IF NOT EXISTS naturalperson (
     id INT NOT NULL AUTO_INCREMENT,

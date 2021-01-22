@@ -29,7 +29,7 @@ class PDOService extends PDO{
 			try {
 			parent::__construct("mysql:host=".$this->dbConfig['database']['host'].";dbname=".$this->dbConfig['database']['name'], $this->dbConfig['database']['user'], $this->dbConfig['database']['password']);
 			
-			}catch(PDOException $e){
+			}catch(\PDOException $e){
 				$this->conectionFailed = true;
 			}
 		}
@@ -45,6 +45,3 @@ class PDOService extends PDO{
 		return ($this->conectionFailed ? false : true);
 	}
 }
-
-
-?>
