@@ -18,10 +18,8 @@ class Pessoa extends ControllerTemplate{
 					http_response_code(200);
 				}else{
 					http_response_code(422);
-				}
-				
-				echo "DEFAULT GET";
-			break;
+				}	
+				break;
 			case 'POST':
 				echo "DEFAULT POST";
 			break;

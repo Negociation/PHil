@@ -12,7 +12,8 @@
     "require": {
 		"php": ">=7.2.0",
 		"ext-pdo_mysql": "^7.2",
-        "ext-PDO": "^7.2"	
+        "ext-PDO": "^7.2",	
+		"mnapoli/php-di": "~4.0"
 	},
 	"autoload": {
 		"psr-4": {

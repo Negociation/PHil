@@ -20,8 +20,7 @@ class DAOService{
 	protected function getAll($table){	
 		try {
 			$sql = 'SELECT * FROM .'.$table.' order by id';
-			$stmt = $this->dbConnection->prepare($sql);
-			$stmt->execute();
+			$stmt = $this->dbConnection->run($sql);
 			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		}catch(Exception $e){
 			//If not return false

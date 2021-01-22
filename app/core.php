@@ -14,28 +14,10 @@ ini_set('session.cookie_httponly', 1);
 // - Desc: Add Autoload include file
 require_once  __DIR__.'/vendor/autoload.php';
 
-
-/* REFATORAR  --> */
-
-$dbSettings = parse_ini_file(dirname(__DIR__,1).'\app\core\settings.ini', true);
-
-$conn = null;
-
-$erroDb = false;
-try {
-
-  $conn = new PDO("mysql:host=".$dbSettings['database']['host'].";dbname=".$dbSettings['database']['name'], $dbSettings['database']['user'], $dbSettings['database']['password']);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch(PDOException $e) {
-	if( ! empty($conn) ) {
-		$erroDb = true;
-	}
-  $erroDb = true;
-    
-}
+$conn = new Services\PDOService();
 
 
-if(!$erroDb){
+if($conn->getConnectionStatus()){
 	Services\RouteService::navigateTo($conn);
 }
 

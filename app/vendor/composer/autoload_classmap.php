@@ -6,6 +6,4 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Controllers\\Pessoa' => $baseDir . '/core/controllers/pessoa.php',
-    'Services\\RouteService' => $baseDir . '/core/services/routeservice.php',
 );

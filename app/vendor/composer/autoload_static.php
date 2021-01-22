@@ -6,10 +6,38 @@ namespace Composer\Autoload;
 
 class ComposerStaticInited8a4f7f03b314e215738404de910417
 {
+    public static $files = array (
+        '04d01c65c12f8d8ed2a53c6dd09ec5e2' => __DIR__ . '/..' . '/mnapoli/php-di/src/DI/functions.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
+        'Z' => 
+        array (
+            'Zend\\EventManager\\' => 18,
+            'Zend\\Code\\' => 10,
+        ),
         'S' => 
         array (
             'Services\\' => 9,
+        ),
+        'P' => 
+        array (
+            'Psr\\Container\\' => 14,
+        ),
+        'M' => 
+        array (
+            'MyCLabs\\Enum\\' => 13,
+        ),
+        'I' => 
+        array (
+            'Interop\\Container\\' => 18,
+        ),
+        'D' => 
+        array (
+            'Doctrine\\Common\\Lexer\\' => 22,
+            'Doctrine\\Common\\Cache\\' => 22,
+            'Doctrine\\Common\\Annotations\\' => 28,
+            'DI\\' => 3,
         ),
         'C' => 
         array (
@@ -18,9 +46,45 @@ class ComposerStaticInited8a4f7f03b314e215738404de910417
     );
 
     public static $prefixDirsPsr4 = array (
+        'Zend\\EventManager\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-eventmanager/src',
+        ),
+        'Zend\\Code\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-code/src',
+        ),
         'Services\\' => 
         array (
             0 => __DIR__ . '/../..' . '/core/services',
+        ),
+        'Psr\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
+        'MyCLabs\\Enum\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/myclabs/php-enum/src',
+        ),
+        'Interop\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/container-interop/container-interop/src/Interop/Container',
+        ),
+        'Doctrine\\Common\\Lexer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/lexer/lib/Doctrine/Common/Lexer',
+        ),
+        'Doctrine\\Common\\Cache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/cache/lib/Doctrine/Common/Cache',
+        ),
+        'Doctrine\\Common\\Annotations\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/annotations/lib/Doctrine/Common/Annotations',
+        ),
+        'DI\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mnapoli/php-di/src/DI',
         ),
         'Controllers\\' => 
         array (
@@ -28,9 +92,25 @@ class ComposerStaticInited8a4f7f03b314e215738404de910417
         ),
     );
 
-    public static $classMap = array (
-        'Controllers\\Pessoa' => __DIR__ . '/../..' . '/core/controllers/pessoa.php',
-        'Services\\RouteService' => __DIR__ . '/../..' . '/core/services/routeservice.php',
+    public static $prefixesPsr0 = array (
+        'U' => 
+        array (
+            'UnitTest' => 
+            array (
+                0 => __DIR__ . '/..' . '/php-di/phpdoc-reader/tests',
+            ),
+        ),
+        'P' => 
+        array (
+            'ProxyManager\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/ocramius/proxy-manager/src',
+            ),
+            'PhpDocReader' => 
+            array (
+                0 => __DIR__ . '/..' . '/php-di/phpdoc-reader/src',
+            ),
+        ),
     );
 
     public static function getInitializer(ClassLoader $loader)
@@ -38,7 +118,7 @@ class ComposerStaticInited8a4f7f03b314e215738404de910417
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInited8a4f7f03b314e215738404de910417::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInited8a4f7f03b314e215738404de910417::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInited8a4f7f03b314e215738404de910417::$classMap;
+            $loader->prefixesPsr0 = ComposerStaticInited8a4f7f03b314e215738404de910417::$prefixesPsr0;
 
         }, null, ClassLoader::class);
     }
