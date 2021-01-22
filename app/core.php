@@ -16,7 +16,8 @@ require_once  __DIR__.'/vendor/autoload.php';
 
 $conn = new Services\PDOService();
 
-
+// + Verifying the Database Connection Status 
+// - Desc: If there's a valid connection then Navigate 
 if($conn->getConnectionStatus()){
 	Services\RouteService::navigateTo($conn);
 }
