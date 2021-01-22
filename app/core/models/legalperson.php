@@ -1,10 +1,10 @@
 <?php
 
-namespace core\model;
+namespace Models;
 
 class LegalPerson extends Person
 {
-    private $cnpj;
+    protected $cnpj;
 
     public function getCNPJ()
     {

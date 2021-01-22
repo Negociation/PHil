@@ -1,12 +1,12 @@
 <?php
 
-namespace core\model;
+namespace Models;
 
 class NaturalPerson extends Person
 {
-    private $cpf;
-    private $rg;
-    private $uuid;
+    protected $cpf;
+    protected $rg;
+    protected $uuid;
 
     public function getCPF()
     {

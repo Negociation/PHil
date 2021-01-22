@@ -1,10 +1,10 @@
 <?php
 
-namespace core\model;
+namespace Models;
 
 class Person
 {
-    public $completeName;
+    protected $completeName;
 
     public function getCompleteName()
     {
