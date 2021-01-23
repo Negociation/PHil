@@ -28,6 +28,13 @@ class PessoaDAO extends DAOService{
 		return false;
 	}
 	
+	public function insertPessoa($objetoPessoa){
+		return false;
+	}
+
+	public function updatePessoa($objetoPessoa){
+		return false;
+	}	
 	
 	
 }

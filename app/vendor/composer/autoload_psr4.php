@@ -11,6 +11,8 @@ return array(
     'Opis\\Closure\\' => array($vendorDir . '/opis/closure/src'),
     'Models\\' => array($baseDir . '/core/models'),
     'Invoker\\' => array($vendorDir . '/php-di/invoker/src'),
+    'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib/Doctrine/Common/Lexer'),
+    'Doctrine\\Common\\Annotations\\' => array($vendorDir . '/doctrine/annotations/lib/Doctrine/Common/Annotations'),
     'DI\\' => array($vendorDir . '/php-di/php-di/src'),
     'Controllers\\' => array($baseDir . '/core/controllers'),
 );
