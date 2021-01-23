@@ -7,7 +7,7 @@ class RouteService{
 	public $requestURI;
 	public $parsedURI = [];
 	
-	public function navigateTo($conn){
+	public function navigateTo(){
 		
 		// Cleaning the URL Brackets
 		$requestURI = (substr($_SERVER["REQUEST_URI"],-1) == "/" ? substr($_SERVER["REQUEST_URI"],1,-1) : $_SERVER["REQUEST_URI"]);
@@ -19,9 +19,9 @@ class RouteService{
 			$parsedURI = self::validateURI($requestURI);
 			
 			if(class_exists($parsedURI[0] = "Controllers\\".$parsedURI[0])){
-				if(Method_Exists(new $parsedURI[0]($conn),$parsedURI[1])){
+				if(Method_Exists(new $parsedURI[0](),$parsedURI[1])){
 					
-					call_user_func_array([new $parsedURI[0]($conn),$parsedURI[1]],$parsedURI[2]);
+					call_user_func_array([new $parsedURI[0](),$parsedURI[1]],$parsedURI[2]);
 					
 				}else{
 					http_response_code(404);

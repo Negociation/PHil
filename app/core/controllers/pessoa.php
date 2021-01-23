@@ -1,7 +1,7 @@
 <?php
 namespace Controllers;
 
-use Services\PessoaDAO;
+use Services;
 
 class Pessoa extends ControllerTemplate{
 	
@@ -12,7 +12,10 @@ class Pessoa extends ControllerTemplate{
 		
 		switch($_SERVER['REQUEST_METHOD']){
 			case 'GET':
-				$pessoaObjects = (new PessoaDAO($this->dbConnection))->getPessoas();
+			
+				//Get All Persons from database using the dependency container
+				$pessoaObjects = ($this->container->get('Services\PessoaDAO'))->getPessoas();
+				
 				if($pessoaObjects){
 					echo json_encode($pessoaObjects);
 					http_response_code(200);

@@ -3,16 +3,15 @@
 namespace Services;
 
 use PDO;
+use DI;
 
 class DAOService{
 	
 	private $dbConnection;
 	
-	function __construct($dbConnection){
+	function __construct(PDOService $dbConnection){
 		
 		$this->dbConnection = $dbConnection;
-		
-
 	}
 	
 	/* SELECTS */

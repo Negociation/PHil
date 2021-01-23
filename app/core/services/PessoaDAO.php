@@ -9,7 +9,7 @@ class PessoaDAO extends DAOService{
 		
 		/* CONSTRUIR OBJETO */
 		
-		return false;
+		return true;
 	}
 
 	public function getPessoaById($param){

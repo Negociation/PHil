@@ -14,13 +14,13 @@ ini_set('session.cookie_httponly', 1);
 // - Desc: Add Autoload include file
 require_once  __DIR__.'/vendor/autoload.php';
 
-$conn = new Services\PDOService();
 
 // + Verifying the Database Connection Status 
 // - Desc: If there's a valid connection then Navigate 
-if($conn->getConnectionStatus()){
-	Services\RouteService::navigateTo($conn);
+if((new Services\PDOService())->getConnectionStatus()){
+	Services\RouteService::navigateTo();
+}else{
+	http_response_code(500);
+	echo json_encode(array("message" => "Could not connect to the database"));
 }
-
-
 ?>

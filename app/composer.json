@@ -13,7 +13,7 @@
 		"php": ">=7.2.0",
 		"ext-pdo_mysql": "^7.2",
         "ext-PDO": "^7.2",	
-		"mnapoli/php-di": "~4.0"
+        "php-di/php-di": "^7.0@beta"
 	},
 	"autoload": {
 		"psr-4": {
