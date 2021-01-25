@@ -18,6 +18,7 @@
 	},
 	"autoload": {
 		"psr-4": {
+			"Annotations\\MER\\": "./core/annotations/",
 			"Services\\": "./core/services/",
 			"Controllers\\": "./core/controllers/",
 			"Models\\": "./core/models/"

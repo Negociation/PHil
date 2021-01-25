@@ -15,4 +15,5 @@ return array(
     'Doctrine\\Common\\Annotations\\' => array($vendorDir . '/doctrine/annotations/lib/Doctrine/Common/Annotations'),
     'DI\\' => array($vendorDir . '/php-di/php-di/src'),
     'Controllers\\' => array($baseDir . '/core/controllers'),
+    'Annotations\\MER\\' => array($baseDir . '/core/annotations'),
 );

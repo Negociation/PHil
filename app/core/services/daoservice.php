@@ -4,6 +4,10 @@ namespace Services;
 
 use PDO;
 use DI;
+use Models;
+
+use Doctrine\Common\Annotations\AnnotationReader;
+
 
 class DAOService{
 	
@@ -12,6 +16,18 @@ class DAOService{
 	function __construct(PDOService $dbConnection){
 		
 		$this->dbConnection = $dbConnection;
+		
+		$teste = new Models\Person();		
+		
+	    $reflectionClass = new \ReflectionClass(get_class($teste));
+		
+		$annotationReader = new AnnotationReader();
+
+		$metatags = [];
+		 print_r($annotationReader->getClassAnnotations($reflectionClass));
+
+
+
 	}
 	
 	/* SELECTS */
@@ -47,7 +63,7 @@ class DAOService{
 	}
 	
 	protected function getById($table,$id){
-		try {
+		try{
 			$sql = 'SELECT * FROM '.$table.' WHERE id = :id';
 			$stmt = $this->dbConnection->prepare($sql);
 			$stmt->bindParam(':id', $id);
@@ -57,7 +73,7 @@ class DAOService{
 			//If not return false
 			return false;
 			exit;
-		}		
+		}
 		return $result;		
 	}
 

@@ -2,17 +2,15 @@
 
 namespace Models;
 
-use Doctrine\ORM\Mapping as ORM;
+
+use Annotations\MER as MER;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="person")
+ * @MER\Tabela
  */
 class Person
 {
-    /**
-     * @ORM\Column(name="name",type="string")
-     */
+
     protected $completeName;
 
 

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitd4e9549d0f9f6884eb359d8ac2f0bda3
+class ComposerStaticInit231d27cd1e93f666ded6433a6f474295
 {
     public static $files = array (
         '538ca81a9a966a6716601ecf48f4eaef' => __DIR__ . '/..' . '/opis/closure/functions.php',
@@ -41,6 +41,10 @@ class ComposerStaticInitd4e9549d0f9f6884eb359d8ac2f0bda3
         'C' => 
         array (
             'Controllers\\' => 12,
+        ),
+        'A' => 
+        array (
+            'Annotations\\MER\\' => 16,
         ),
     );
 
@@ -81,13 +85,17 @@ class ComposerStaticInitd4e9549d0f9f6884eb359d8ac2f0bda3
         array (
             0 => __DIR__ . '/../..' . '/core/controllers',
         ),
+        'Annotations\\MER\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/core/annotations',
+        ),
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitd4e9549d0f9f6884eb359d8ac2f0bda3::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitd4e9549d0f9f6884eb359d8ac2f0bda3::$prefixDirsPsr4;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit231d27cd1e93f666ded6433a6f474295::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit231d27cd1e93f666ded6433a6f474295::$prefixDirsPsr4;
 
         }, null, ClassLoader::class);
     }
