@@ -61,14 +61,26 @@ class DAOService{
 		return $result;		
 	}
 
-
+	/* INSERT */
 	
-	/* INSERTS */
 	
-	/* UPDATES */
+	/* UPDATE */
+	
 	
 	/* DROP */
-	
+	protected function drop($table, $id)
+	{
+		$sql = 'DELETE FROM' . $table . 'WHERE id = :id';
+
+		try {
+			$stmt = $this->dbConnection->prepare($sql);
+			$stmt->bindValue('id', $id);
+			$stmt->execute();
+		} catch(Exception $e){
+			return false;
+		}
+		return true;
+	}	
 	
 }
 
