@@ -2,15 +2,16 @@
 
 namespace Models;
 
-
 use Annotations\MER as MER;
 
 /**
- * @MER\Tabela
+ * @MER\Tabela(nome="person")
  */
 class Person
 {
-
+	/**
+	 * @MER\Coluna(nome="nome",tipo="text")
+	 */
     protected $completeName;
 
 

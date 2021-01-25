@@ -5,7 +5,7 @@ namespace Services;
 use PDO;
 use DI;
 use Models;
-
+use Annotations;
 use Doctrine\Common\Annotations\AnnotationReader;
 
 
@@ -24,10 +24,25 @@ class DAOService{
 		$annotationReader = new AnnotationReader();
 
 		$metatags = [];
+echo "--\n";		
+		//Classe
 		 print_r($annotationReader->getClassAnnotations($reflectionClass));
 
+echo "--\n";
+		//Propiedade
+		$props   = $reflectionClass->getProperties(\ReflectionProperty::IS_PUBLIC | \ReflectionProperty::IS_PROTECTED);
+
+foreach ($props as $prop) {
+	print_r($annotationReader->getPropertyAnnotations(new \ReflectionProperty($reflectionClass->getName(), $prop->getName())));
+}
 
 
+echo "--\n";
+
+
+}
+
+		
 	}
 	
 	/* SELECTS */

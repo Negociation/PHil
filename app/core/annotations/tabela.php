@@ -2,14 +2,15 @@
 
 namespace Annotations\MER;
 
-
 /**
  * @Annotation
- * @Target({"METHOD","PROPERTY"})
  */
  
-public class Tabela{
+class Tabela{
+	
+	public $nome;
+	
 	public function __construct(array $values){
-		public $this->nome = $values['nome'];
+		$this->nome = $values['nome'];
 	}
 }

@@ -15,6 +15,12 @@ ini_set('session.cookie_httponly', 1);
 require_once  __DIR__.'/vendor/autoload.php';
 
 
+//Registry all doctrine annotations
+if (class_exists(Doctrine\Common\Annotations\AnnotationRegistry::class)) {
+    Doctrine\Common\Annotations\AnnotationRegistry::registerLoader('class_exists');
+}
+
+
 // + Verifying the Database Connection Status 
 // - Desc: If there's a valid connection then Navigate 
 if((new Services\PDOService())->getConnectionStatus()){
