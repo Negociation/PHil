@@ -6,28 +6,23 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="pessoa")
+ * @ORM\Table(name="person")
  */
- 
-class Person{
-	
+class Person
+{
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
+     * @ORM\Column(name="name",type="string")
      */
-    protected $id;
-	
-	/**
-    * @ORM\Column(name="name",type="string")
-    */
     protected $completeName;
 
-    public function getCompleteName(){
+
+    public function getCompleteName()
+    {
         return $this->completeName;
     }
 
-    public function setCompleteName($name){
+    public function setCompleteName($name)
+    {
         $this->completeName = $name;
     }
 }
