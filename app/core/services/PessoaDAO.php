@@ -13,7 +13,7 @@ class PessoaDAO extends DAOService{
 	}
 
 	public function getPessoaById($param){
-		$result = getById($param);
+		$result = $this->getById('',$param);
 		
 		/* CONSTRUIR OBJETO */
 		
@@ -21,7 +21,7 @@ class PessoaDAO extends DAOService{
 	}
 	
 	public function getPessoaByCPF(){
-		$result = getByParam($param);
+		$result = $this->getByParam($param);
 		
 		/* CONSTRUIR OBJETO */		
 		

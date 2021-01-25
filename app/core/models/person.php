@@ -9,8 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="pessoa")
  */
  
-class Person
-{
+class Person{
 	
     /**
      * @ORM\Id
@@ -18,21 +17,17 @@ class Person
      * @ORM\GeneratedValue
      */
     protected $id;
-
-	
 	
 	/**
     * @ORM\Column(name="name",type="string")
     */
     protected $completeName;
 
-    public function getCompleteName()
-    {
+    public function getCompleteName(){
         return $this->completeName;
     }
 
-    public function setCompleteName($name)
-    {
+    public function setCompleteName($name){
         $this->completeName = $name;
     }
 }

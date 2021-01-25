@@ -50,10 +50,17 @@ class Pessoa extends ControllerTemplate{
 		
 	}
 	
-	public function id($param){
-		
-		echo $param;
-	}
+	public function id($param)
+		{
+			$pessoaObject = ($this->container->get('Services\PessoaDAO'))->getPessoaById($param);
+
+			if ($pessoaObject){
+				http_response_code(200);
+				echo json_encode($pessoaObjects);
+			} else {
+				http_response_code(422);
+			}
+		}
 }
 
 
