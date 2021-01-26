@@ -10,7 +10,7 @@ use Annotations\MER as MER;
 class Person
 {
 	/**
-	 * @MER\Coluna(nome="nome",tipo="text")
+	 * @MER\Coluna(nome="nomeusuario",tipo="text")
 	 */
     protected $completeName;
 

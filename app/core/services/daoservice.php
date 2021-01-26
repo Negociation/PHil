@@ -8,40 +8,16 @@ use Models;
 use Annotations;
 use Doctrine\Common\Annotations\AnnotationReader;
 
-
 class DAOService{
 	
 	private $dbConnection;
+	private $annotationReader;
 	
 	function __construct(PDOService $dbConnection){
 		
 		$this->dbConnection = $dbConnection;
 		
-		$teste = new Models\Person();		
-		
-	    $reflectionClass = new \ReflectionClass(get_class($teste));
-		
-		$annotationReader = new AnnotationReader();
-
-		$metatags = [];
-echo "--\n";		
-		//Classe
-		 print_r($annotationReader->getClassAnnotations($reflectionClass));
-
-echo "--\n";
-		//Propiedade
-		$props   = $reflectionClass->getProperties(\ReflectionProperty::IS_PUBLIC | \ReflectionProperty::IS_PROTECTED);
-
-foreach ($props as $prop) {
-	print_r($annotationReader->getPropertyAnnotations(new \ReflectionProperty($reflectionClass->getName(), $prop->getName())));
-}
-
-
-echo "--\n";
-
-
-
-
+		$this->insert(null);
 		
 	}
 	
@@ -93,7 +69,11 @@ echo "--\n";
 	}
 
 	/* INSERT */
-	
+	protected function insert($classObject){	
+		$classObject = new Models\Person(); /**/
+		$queryObject = new QueryService($classObject);		
+		return $this->dbConnection->run($queryObject->get_insertQuery(),$queryObject->get_bindParams());
+	}
 	
 	/* UPDATE */
 	
@@ -111,7 +91,7 @@ echo "--\n";
 			return false;
 		}
 		return true;
-	}	
+	}
 	
 }
 

@@ -30,15 +30,24 @@ class PDOService extends PDO{
 		}
     }
 	
-	public function run($sql, $args = NULL) {
-        $stmt = $this->prepare($sql);
-        $stmt->execute($args);
+	public function run($sql, $args = []) {
+		try{
+			$stmt = $this->prepare($sql);
+			foreach($args as $bindParam){
+				$stmt->bindValue($bindParam[0],$bindParam[1]);
+			}
+			$stmt->execute();
+		}catch(Exception $e){
+			$stmt = false;
+			exit;
+		}
         return $stmt;
     }
 	
 	public function getConnectionStatus(){
 		return ($this->conectionFailed ? false : true);
 	}
+	
 }
 
 
