@@ -2,10 +2,19 @@
 
 namespace Services;
 
+<<<<<<< Updated upstream
+=======
+use PDO;
+use DI;
+use Models;
+use Annotations;
+use Doctrine\Common\Annotations\AnnotationReader;
+>>>>>>> Stashed changes
 use Exception;
 
 class DAOService
 {
+<<<<<<< Updated upstream
 	private $dbConnection;
 
 	function __construct($dbConnection)
@@ -20,6 +29,28 @@ class DAOService
 			$sql = 'SELECT * FROM .' . $table . ' order by id';
 			$stmt = $this->dbConnection->run($sql);
 			$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+=======
+
+	private $dbConnection;
+	private $annotationReader;
+
+	function __construct(PDOService $dbConnection)
+	{
+
+		$this->dbConnection = $dbConnection;
+
+		$this->insert(null);
+	}
+
+	/* SELECTS */
+
+	protected function getAll($table)
+	{
+		try {
+			$sql = 'SELECT * FROM .' . $table . ' ORDER BY id';
+			$stmt = $this->dbConnection->run($sql);
+			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+>>>>>>> Stashed changes
 		} catch (Exception $e) {
 			//If not return false
 			return false;
@@ -31,18 +62,29 @@ class DAOService
 	protected function getByParam($table, $column, $param)
 	{
 		try {
+<<<<<<< Updated upstream
 			$sql = 'SELECT * FROM .' . $table . ' where ' . $column . ' = :param';
+=======
+			$sql = 'SELECT * FROM .' . $table . ' WHERE ' . $column . ' = :param';
+>>>>>>> Stashed changes
 			$stmt = $this->dbConnection->prepare($sql);
 			$stmt->bindValue(':param', $param);
 			$stmt->execute();
 
+<<<<<<< Updated upstream
 			$result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+=======
+			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+>>>>>>> Stashed changes
 		} catch (Exception $e) {
 			//If not return false
 			return false;
 			exit;
 		}
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 		return $result;
 	}
 
@@ -53,13 +95,18 @@ class DAOService
 			$stmt = $this->dbConnection->prepare($sql);
 			$stmt->bindParam(':id', $id);
 			$stmt->execute();
+<<<<<<< Updated upstream
 
 			$result = $stmt->fetch(\PDO::FETCH_ASSOC);
+=======
+			$result = $stmt->fetch();
+>>>>>>> Stashed changes
 		} catch (Exception $e) {
 			//If not return false
 			return false;
 			exit;
 		}
+<<<<<<< Updated upstream
 
 		return $result;
 	}
@@ -104,6 +151,23 @@ class DAOService
 		}
 		return true;
 	}
+=======
+		return $result;
+	}
+
+	/* INSERT */
+	protected function insert($classObject)
+	{
+		// $classObject = new Models\NaturalPerson(); /* objeto de teste, excluir depois */
+
+		$queryObject = new QueryService($classObject);
+
+		return $this->dbConnection->run($queryObject->get_insertQuery(), $queryObject->get_bindParams());
+	}
+
+	/* UPDATE */
+
+>>>>>>> Stashed changes
 
 	/* DROP */
 	protected function delete($table, $id)

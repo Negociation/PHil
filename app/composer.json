@@ -1,4 +1,5 @@
 {
+<<<<<<< Updated upstream
     "name": "kionux/phpapi",
     "description": "A small php API project",
     "type": "project",
@@ -22,4 +23,32 @@
 			"Models\\": "./core/models/"
 		}
 	}
+=======
+  "name": "kionux/phpapi",
+  "description": "A small php API project",
+  "type": "project",
+  "authors": [
+    {
+      "name": "Marcos T",
+      "email": "32465944+Negociation@users.noreply.github.com"
+    }
+  ],
+  "minimum-stability": "alpha",
+  "require": {
+    "php": ">=7.2.0",
+    "ext-pdo_mysql": "^7.2",
+    "ext-PDO": "^7.2",
+    "php-di/php-di": "^6.3",
+    "doctrine/annotations": "^1.11",
+    "monolog/monolog": "^2.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Annotations\\MER\\": "./core/annotations/",
+      "Services\\": "./core/services/",
+      "Controllers\\": "./core/controllers/",
+      "Models\\": "./core/models/"
+    }
+  }
+>>>>>>> Stashed changes
 }

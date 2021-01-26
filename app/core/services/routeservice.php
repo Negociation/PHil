@@ -8,7 +8,11 @@ class RouteService
 	public $requestURI;
 	public $parsedURI = [];
 
+<<<<<<< Updated upstream
 	public function navigateTo($conn)
+=======
+	public function navigateTo()
+>>>>>>> Stashed changes
 	{
 
 		// Cleaning the URL Brackets
@@ -22,8 +26,14 @@ class RouteService
 
 			if (class_exists($parsedURI[0] = "Controllers\\" . $parsedURI[0])) {
 
+<<<<<<< Updated upstream
 				if (Method_Exists(new $parsedURI[0]($conn), $parsedURI[1])) {
 					call_user_func_array([new $parsedURI[0]($conn), $parsedURI[1]], $parsedURI[2]);
+=======
+				if (Method_Exists(new $parsedURI[0](), $parsedURI[1])) {
+
+					call_user_func_array([new $parsedURI[0](), $parsedURI[1]], $parsedURI[2]);
+>>>>>>> Stashed changes
 				} else {
 					http_response_code(404);
 				}
@@ -44,6 +54,10 @@ class RouteService
 
 		$parsedURI = explode("/", filter_var($requestURI, FILTER_SANITIZE_URL));
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 		//Add Controller 
 		array_push($finalURI, $parsedURI[0]);
 
