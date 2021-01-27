@@ -5,7 +5,7 @@ namespace Services;
 class PessoaDAO extends DAOService{
 	
 	public function getPessoas(){
-		$result = $this->getAll("pessoas");
+		$result = $this->getAll(new \Models\Person());
 		
 		/* CONSTRUIR OBJETO */
 		

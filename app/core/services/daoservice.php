@@ -14,19 +14,17 @@ class DAOService{
 	private $annotationReader;
 	
 	function __construct(PDOService $dbConnection){
-		
 		$this->dbConnection = $dbConnection;
-		
-		$this->insert(null);
-		
 	}
 	
 	/* SELECTS */
 	
-	protected function getAll($table){	
+	protected function getAll($classObject){	
+		$queryObject = new QueryService($classObject);		
+
 		try {
-			$sql = 'SELECT * FROM .'.$table.' order by id';
-			$stmt = $this->dbConnection->run($sql);
+			//$sql = 'SELECT * FROM .'.$table.' order by id';
+			$stmt = $this->dbConnection->run($queryObject->get_selectAllQuery(),$queryObject->get_bindParams());
 			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		}catch(Exception $e){
 			//If not return false
@@ -70,7 +68,7 @@ class DAOService{
 
 	/* INSERT */
 	protected function insert($classObject){	
-		$classObject = new Models\Person(); /**/
+		//$classObject = new Models\Person(); /**/
 		$queryObject = new QueryService($classObject);		
 		return $this->dbConnection->run($queryObject->get_insertQuery(),$queryObject->get_bindParams());
 	}
@@ -79,15 +77,13 @@ class DAOService{
 	
 	
 	/* DROP */
-	protected function drop($table, $id)
-	{
+	protected function drop($table, $id){
 		$sql = 'DELETE FROM' . $table . 'WHERE id = :id';
-
-		try {
+		try{
 			$stmt = $this->dbConnection->prepare($sql);
 			$stmt->bindValue('id', $id);
 			$stmt->execute();
-		} catch(Exception $e){
+		}catch(Exception $e){
 			return false;
 		}
 		return true;
