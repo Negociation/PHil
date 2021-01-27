@@ -18,9 +18,7 @@ class QueryService{
 	function __construct($modelObject){
 		
 		if(is_object($modelObject)){
-			
-			print_r( get_object_vars($modelObject));
-			
+						
 			//Initialize
 			$this->idField = -1;
 
@@ -100,7 +98,7 @@ class QueryService{
 			}
 			
 			
-			
+			/* TESTE DE QUERYS
 			echo $this->insertQuery;
 			echo "\n";
 			echo $this->selectAllQuery;
@@ -108,7 +106,7 @@ class QueryService{
 			echo $this->updateQuery;
 			echo "\n";
 			echo $this->dropQuery;			
-		
+			*/
 
 		}
 	}

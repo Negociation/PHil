@@ -7,7 +7,7 @@ use Annotations\MER as MER;
 /**
  * @MER\Tabela(nome="person")
  */
-class Person{
+class Pessoa{
 	
 	/**
 	 * @MER\Coluna(nome="nomeusuario",tipo="text")

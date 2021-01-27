@@ -5,7 +5,7 @@ namespace Services;
 class PessoaDAO extends DAOService{
 	
 	public function getPessoas(){
-		$result = $this->getAll(new \Models\Person());
+		$result = $this->getAll(new \Models\Pessoa());
 		
 		/* CONSTRUIR OBJETO */
 		
@@ -30,7 +30,7 @@ class PessoaDAO extends DAOService{
 	
 	public function insertPessoa($objetoPessoa){
 		
-		$classObject = new Models\NaturalPerson(); 
+		$classObject = new Models\Pessoa(); 
 		$classObject->setNome($pessoaObject["name"]);
 		$classObject->setCPF(isset($pessoaObject["cpf"]) ? $pessoaObject["cpf"] : '');
 		$classObject->setRG(isset($pessoaObject["rg"]) ? $pessoaObject["rg"] : '');
