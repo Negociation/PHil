@@ -4,40 +4,28 @@ namespace Models;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="naturalperson")
- */
-class NaturalPerson //extends Person
+class PessoaFisica //extends Person
 {
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     */
-    protected $id;
-
-    /**
-     * @ORM\Column(name="name", type="string");
-     */
-    protected $completeName;
-
-    /**
-     * @ORM\Column(name="cpf",type="string")
+     * @MER\Coluna(nome="cpf", tipo="string")
      */
     protected $cpf;
 
     /**
-     * @ORM\Column(name="rg",type="string")
+     * @MER\Coluna(nome="cnpj", tipo="string")
+     */
+    protected $cnpj;
+
+    /**
+     * @MER\Coluna(nome="rg", tipo="string")
      */
     protected $rg;
 
     /**
-     * @ORM\Column(name="uuid",type="string")
+     * @MER\Coluna(nome="uuid", tipo="string")
      */
-    protected $uuid;
-
+	 
 
     public function getId()
     {
