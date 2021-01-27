@@ -30,6 +30,7 @@ class Pessoa extends ControllerTemplate{
 				
 				if ($postResult){
 					http_response_code(200);
+					echo json_encode($pessoaObject);
 				}else{
 					http_response_code(422);
 				}
@@ -41,13 +42,12 @@ class Pessoa extends ControllerTemplate{
 				
 				if ($putResult){
 					http_response_code(200);
+					echo json_encode($putResult);
 				}else{
 					http_response_code(422);
 				}
 			break;
-			
-		}
-		
+		}	
 	}
 	
 	public function id($param)

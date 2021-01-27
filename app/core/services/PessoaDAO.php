@@ -9,7 +9,7 @@ class PessoaDAO extends DAOService{
 		
 		/* CONSTRUIR OBJETO */
 		
-		return true;
+		return $result;
 	}
 
 	public function getPessoaById($param){
@@ -29,7 +29,16 @@ class PessoaDAO extends DAOService{
 	}
 	
 	public function insertPessoa($objetoPessoa){
-		return false;
+		
+		$classObject = new Models\NaturalPerson(); 
+		$classObject->setNome($pessoaObject["name"]);
+		$classObject->setCPF(isset($pessoaObject["cpf"]) ? $pessoaObject["cpf"] : '');
+		$classObject->setRG(isset($pessoaObject["rg"]) ? $pessoaObject["rg"] : '');
+		$classObject->setCNPJ(isset($pessoaObject["cpnj"]) ? $pessoaObject["cpnj"] : '');
+		$classObject->setUUID(isset($pessoaObject["uuid"]) ? $pessoaObject["uuid"] : '123456789');
+
+		
+		$result = $this->insert($classObject);
 	}
 
 	public function updatePessoa($objetoPessoa){
