@@ -97,8 +97,8 @@ class QueryService{
 				}	
 			}
 			
-			
-			/* TESTE DE QUERYS
+			/*
+			// TESTE DE QUERYS
 			echo $this->insertQuery;
 			echo "\n";
 			echo $this->selectAllQuery;

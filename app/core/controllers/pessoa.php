@@ -16,7 +16,7 @@ class Pessoa extends ControllerTemplate{
 				//Get All Persons from database using the dependency container
 				$pessoaObjects = ($this->container->get('Services\PessoaDAO'))->getPessoas();
 				
-				if($pessoaObjects){
+				if(is_array($pessoaObjects)){
 					http_response_code(200);
 					echo json_encode($pessoaObjects);
 				}else{

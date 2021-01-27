@@ -5,7 +5,7 @@ namespace Models;
 use Annotations\MER as MER;
 
 /**
- * @MER\Tabela(nome="person")
+ * @MER\Tabela(nome="pessoas")
  */
 class Pessoa{
 	

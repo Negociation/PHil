@@ -23,10 +23,10 @@ class DAOService{
 		$queryObject = new QueryService($classObject);		
 
 		try {
-			//$sql = 'SELECT * FROM .'.$table.' order by id';
-			$stmt = $this->dbConnection->run($queryObject->get_selectAllQuery(),$queryObject->get_bindParams());
+			$stmt = $this->dbConnection->run($queryObject->get_selectAllQuery());
 			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		}catch(Exception $e){
+			echo "oi";
 			//If not return false
 			return false;
 			exit;
