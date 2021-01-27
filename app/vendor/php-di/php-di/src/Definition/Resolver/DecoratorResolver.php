@@ -17,9 +17,15 @@ use Psr\Container\ContainerInterface;
  */
 class DecoratorResolver implements DefinitionResolver
 {
-    private ContainerInterface $container;
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
 
-    private DefinitionResolver $definitionResolver;
+    /**
+     * @var DefinitionResolver
+     */
+    private $definitionResolver;
 
     /**
      * The resolver needs a container. This container will be passed to the factory as a parameter

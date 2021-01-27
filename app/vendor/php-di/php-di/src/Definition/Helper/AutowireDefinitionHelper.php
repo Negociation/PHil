@@ -13,7 +13,7 @@ use DI\Definition\AutowireDefinition;
  */
 class AutowireDefinitionHelper extends CreateDefinitionHelper
 {
-    public const DEFINITION_CLASS = AutowireDefinition::class;
+    const DEFINITION_CLASS = AutowireDefinition::class;
 
     /**
      * Defines a value for a specific argument of the constructor.
@@ -28,7 +28,7 @@ class AutowireDefinitionHelper extends CreateDefinitionHelper
      *
      * @return $this
      */
-    public function constructorParameter($parameter, $value) : self
+    public function constructorParameter($parameter, $value)
     {
         $this->constructor[$parameter] = $value;
 
@@ -52,7 +52,7 @@ class AutowireDefinitionHelper extends CreateDefinitionHelper
      *
      * @return $this
      */
-    public function methodParameter(string $method, $parameter, $value) : self
+    public function methodParameter(string $method, $parameter, $value)
     {
         // Special case for the constructor
         if ($method === '__construct') {

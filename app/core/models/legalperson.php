@@ -6,7 +6,7 @@ namespace Models;
  * @ORM\Entity
  * @ORM\Table(name="legalperson")
  */
-class LegalPerson extends Person
+class LegalPerson extends Pessoa
 {
     /**
      * @ORM\Id

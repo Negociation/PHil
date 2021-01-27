@@ -15,6 +15,7 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\Common\Annotations\SimpleAnnotationReader;
 use InvalidArgumentException;
+use PhpDocReader\PhpDocReader;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionNamedType;
@@ -32,11 +33,26 @@ use UnexpectedValueException;
  */
 class AnnotationBasedAutowiring implements DefinitionSource, Autowiring
 {
-    private ?Reader $annotationReader = null;
+    /**
+     * @var Reader
+     */
+    private $annotationReader;
 
     /**
-     * @throws InvalidAnnotation
+     * @var PhpDocReader
      */
+    private $phpDocReader;
+
+    /**
+     * @var bool
+     */
+    private $ignorePhpDocErrors;
+
+    public function __construct($ignorePhpDocErrors = false)
+    {
+        $this->ignorePhpDocErrors = (bool) $ignorePhpDocErrors;
+    }
+
     public function autowire(string $name, ObjectDefinition $definition = null)
     {
         $className = $definition ? $definition->getClassName() : $name;
@@ -102,9 +118,6 @@ class AnnotationBasedAutowiring implements DefinitionSource, Autowiring
         }
     }
 
-    /**
-     * @throws InvalidAnnotation
-     */
     private function readProperty(ReflectionProperty $property, ObjectDefinition $definition, $classname = null)
     {
         // Look for @Inject annotation
@@ -113,25 +126,21 @@ class AnnotationBasedAutowiring implements DefinitionSource, Autowiring
             return;
         }
 
-        // Try to @Inject("name") or look for the property type
-        $entryName = $annotation->getName();
+        // Try to @Inject("name") or look for @var content
+        $entryName = $annotation->getName() ?: $this->getPhpDocReader()->getPropertyClass($property);
 
-        // Try using typed properties
-        $propertyType = $property->getType();
-        if ($entryName === null && $propertyType instanceof ReflectionNamedType) {
-            if (! class_exists($propertyType->getName()) && ! interface_exists($propertyType->getName())) {
-                throw new InvalidAnnotation(sprintf(
-                    '@Inject found on property %s::%s but unable to guess what to inject, the type of the property does not look like a valid class or interface name',
-                    $property->getDeclaringClass()->getName(),
-                    $property->getName()
-                ));
-            }
-            $entryName = $propertyType->getName();
+        // Try using PHP7.4 typed properties
+        if (\PHP_VERSION_ID > 70400
+            && $entryName === null
+            && $property->getType() instanceof ReflectionNamedType
+            && (class_exists($property->getType()->getName()) || interface_exists($property->getType()->getName()))
+        ) {
+            $entryName = $property->getType()->getName();
         }
 
         if ($entryName === null) {
             throw new InvalidAnnotation(sprintf(
-                '@Inject found on property %s::%s but unable to guess what to inject, please add a type to the property',
+                '@Inject found on property %s::%s but unable to guess what to inject, use a @var annotation',
                 $property->getDeclaringClass()->getName(),
                 $property->getName()
             ));
@@ -168,9 +177,9 @@ class AnnotationBasedAutowiring implements DefinitionSource, Autowiring
     }
 
     /**
-     * @throws InvalidAnnotation
+     * @return MethodInjection|null
      */
-    private function getMethodInjection(ReflectionMethod $method) : ?MethodInjection
+    private function getMethodInjection(ReflectionMethod $method)
     {
         // Look for @Inject annotation
         try {
@@ -227,16 +236,20 @@ class AnnotationBasedAutowiring implements DefinitionSource, Autowiring
             return null;
         }
 
-        // Look for the property type
+        // Try to use the type-hinting
         $parameterType = $parameter->getType();
         if ($parameterType && !$parameterType->isBuiltin() && $parameterType instanceof ReflectionNamedType) {
             return $parameterType->getName();
         }
 
-        return null;
+        // Last resort, look for @param tag
+        return $this->getPhpDocReader()->getParameterClass($parameter);
     }
 
-    public function getAnnotationReader() : Reader
+    /**
+     * @return Reader The annotation reader
+     */
+    public function getAnnotationReader()
     {
         if ($this->annotationReader === null) {
             AnnotationRegistry::registerLoader('class_exists');
@@ -248,8 +261,17 @@ class AnnotationBasedAutowiring implements DefinitionSource, Autowiring
     }
 
     /**
-     * @throws InvalidAnnotation
+     * @return PhpDocReader
      */
+    private function getPhpDocReader()
+    {
+        if ($this->phpDocReader === null) {
+            $this->phpDocReader = new PhpDocReader($this->ignorePhpDocErrors);
+        }
+
+        return $this->phpDocReader;
+    }
+
     private function readInjectableAnnotation(ReflectionClass $class, ObjectDefinition $definition)
     {
         try {

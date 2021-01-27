@@ -18,7 +18,10 @@ use ReflectionParameter;
  */
 class ParameterResolver
 {
-    private DefinitionResolver $definitionResolver;
+    /**
+     * @var DefinitionResolver
+     */
+    private $definitionResolver;
 
     /**
      * @param DefinitionResolver $definitionResolver Will be used to resolve nested definitions.

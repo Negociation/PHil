@@ -15,13 +15,15 @@ class Reference implements Definition, SelfResolvingDefinition
 {
     /**
      * Entry name.
+     * @var string
      */
-    private string $name = '';
+    private $name = '';
 
     /**
      * Name of the target entry.
+     * @var string
      */
-    private string $targetEntryName;
+    private $targetEntryName;
 
     /**
      * @param string $targetEntryName Name of the target entry
@@ -36,7 +38,7 @@ class Reference implements Definition, SelfResolvingDefinition
         return $this->name;
     }
 
-    public function setName(string $name) : void
+    public function setName(string $name)
     {
         $this->name = $name;
     }
@@ -56,7 +58,7 @@ class Reference implements Definition, SelfResolvingDefinition
         return $container->has($this->getTargetEntryName());
     }
 
-    public function replaceNestedDefinitions(callable $replacer) : void
+    public function replaceNestedDefinitions(callable $replacer)
     {
         // no nested definitions
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DI\Compiler;
 
+use function chmod;
 use DI\Definition\ArrayDefinition;
 use DI\Definition\DecoratorDefinition;
 use DI\Definition\Definition;
@@ -17,8 +18,14 @@ use DI\Definition\StringDefinition;
 use DI\Definition\ValueDefinition;
 use DI\DependencyException;
 use DI\Proxy\ProxyFactory;
+use function dirname;
+use function file_put_contents;
 use InvalidArgumentException;
 use Opis\Closure\SerializableClosure;
+use function rename;
+use function sprintf;
+use function tempnam;
+use function unlink;
 
 /**
  * Compiles the container into PHP code much more optimized for performances.
@@ -27,16 +34,24 @@ use Opis\Closure\SerializableClosure;
  */
 class Compiler
 {
-    private string $containerClass;
+    /**
+     * @var string
+     */
+    private $containerClass;
 
-    private string $containerParentClass;
+    /**
+     * @var string
+     */
+    private $containerParentClass;
 
     /**
      * Definitions indexed by the entry name. The value can be null if the definition needs to be fetched.
      *
      * Keys are strings, values are `Definition` objects or null.
+     *
+     * @var \ArrayIterator
      */
-    private \ArrayIterator $entriesToCompile;
+    private $entriesToCompile;
 
     /**
      * Progressive counter for definitions.
@@ -44,8 +59,10 @@ class Compiler
      * Each key in $entriesToCompile is defined as 'SubEntry' + counter
      * and each definition has always the same key in the CompiledContainer
      * if PHP-DI configuration does not change.
+     *
+     * @var int
      */
-    private int $subEntryCounter = 0;
+    private $subEntryCounter;
 
     /**
      * Progressive counter for CompiledContainer get methods.
@@ -53,24 +70,32 @@ class Compiler
      * Each CompiledContainer method name is defined as 'get' + counter
      * and remains the same after each recompilation
      * if PHP-DI configuration does not change.
+     *
+     * @var int
      */
-    private int $methodMappingCounter = 0;
+    private $methodMappingCounter;
 
     /**
      * Map of entry names to method names.
      *
      * @var string[]
      */
-    private array $entryToMethodMapping = [];
+    private $entryToMethodMapping = [];
 
     /**
      * @var string[]
      */
-    private array $methods = [];
+    private $methods = [];
 
-    private bool $autowiringEnabled;
+    /**
+     * @var bool
+     */
+    private $autowiringEnabled;
 
-    private ProxyFactory $proxyFactory;
+    /**
+     * @var ProxyFactory
+     */
+    private $proxyFactory;
 
     public function __construct(ProxyFactory $proxyFactory)
     {
@@ -148,15 +173,41 @@ class Compiler
 
         ob_start();
         require __DIR__ . '/Template.php';
-        $fileContent = ob_get_contents();
-        ob_end_clean();
+        $fileContent = ob_get_clean();
 
         $fileContent = "<?php\n" . $fileContent;
 
         $this->createCompilationDirectory(dirname($fileName));
-        file_put_contents($fileName, $fileContent);
+        $this->writeFileAtomic($fileName, $fileContent);
 
         return $fileName;
+    }
+
+    private function writeFileAtomic(string $fileName, string $content) : int
+    {
+        $tmpFile = @tempnam(dirname($fileName), 'swap-compile');
+        if ($tmpFile === false) {
+            throw new InvalidArgumentException(
+                sprintf('Error while creating temporary file in %s', dirname($fileName))
+            );
+        }
+        @chmod($tmpFile, 0666);
+
+        $written = file_put_contents($tmpFile, $content);
+        if ($written === false) {
+            @unlink($tmpFile);
+
+            throw new InvalidArgumentException(sprintf('Error while writing to %s', $tmpFile));
+        }
+
+        @chmod($tmpFile, 0666);
+        $renamed = @rename($tmpFile, $fileName);
+        if (!$renamed) {
+            @unlink($tmpFile);
+            throw new InvalidArgumentException(sprintf('Error while renaming %s to %s', $tmpFile, $fileName));
+        }
+
+        return $written;
     }
 
     /**
@@ -305,7 +356,7 @@ PHP;
         return var_export($value, true);
     }
 
-    private function createCompilationDirectory(string $directory) : void
+    private function createCompilationDirectory(string $directory)
     {
         if (!is_dir($directory) && !@mkdir($directory, 0777, true)) {
             throw new InvalidArgumentException(sprintf('Compilation directory does not exist and cannot be created: %s.', $directory));
@@ -346,7 +397,7 @@ PHP;
     }
 
     /**
-     * @throws InvalidDefinition
+     * @throws \DI\Definition\Exception\InvalidDefinition
      */
     private function compileClosure(\Closure $closure) : string
     {

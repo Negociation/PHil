@@ -18,7 +18,10 @@ use ReflectionFunctionAbstract;
  */
 class DefinitionParameterResolver implements ParameterResolver
 {
-    private DefinitionResolver $definitionResolver;
+    /**
+     * @var DefinitionResolver
+     */
+    private $definitionResolver;
 
     public function __construct(DefinitionResolver $definitionResolver)
     {

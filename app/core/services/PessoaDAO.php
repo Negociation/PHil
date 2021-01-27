@@ -2,48 +2,57 @@
 
 namespace Services;
 
-class PessoaDAO extends DAOService{
-	
-	public function getPessoas(){
-		$result = $this->getAll(new \Models\Pessoa());
-		
-		/* CONSTRUIR OBJETO */
-		
-		return $result;
+use Models\PessoaFisica;
+
+class PessoaDAO extends DAOService
+{
+
+	public function getPessoas()
+	{
+		return $this->getAll(new PessoaFisica());
 	}
 
-	public function getPessoaById($param){
-		$result = $this->getById('',$param);
-		
-		/* CONSTRUIR OBJETO */
-		
-		return false;
-	}
-	
-	public function getPessoaByCPF(){
-		$result = $this->getByParam($param);
-		
-		/* CONSTRUIR OBJETO */		
-		
-		return false;
-	}
-	
-	public function insertPessoa($objetoPessoa){
-		
-		$classObject = new Models\Pessoa(); 
-		$classObject->setNome($pessoaObject["name"]);
-		$classObject->setCPF(isset($pessoaObject["cpf"]) ? $pessoaObject["cpf"] : '');
-		$classObject->setRG(isset($pessoaObject["rg"]) ? $pessoaObject["rg"] : '');
-		$classObject->setCNPJ(isset($pessoaObject["cpnj"]) ? $pessoaObject["cpnj"] : '');
-		$classObject->setUUID(isset($pessoaObject["uuid"]) ? $pessoaObject["uuid"] : '123456789');
+	public function getPessoaById($param)
+	{
+		$classObject = new PessoaFisica();
 
-		
-		$result = $this->insert($classObject);
+		$classObject->setId($param);
+
+		return $this->getById($classObject);
 	}
 
-	public function updatePessoa($objetoPessoa){
-		return false;
-	}	
-	
-	
+	public function getPessoaByCPF($param)
+	{
+		$classObject = new PessoaFisica();
+
+		$classObject->setCPF($param);
+
+		return $this->getByParam($classObject, $classObject->getCPF());
+	}
+
+	public function insertPessoa($objetoPessoa)
+	{
+		$classObject = new PessoaFisica();
+
+		$classObject->setCompleteName($objetoPessoa["name"]);
+		$classObject->setCPF(isset($objetoPessoa["cpf"]) ? $objetoPessoa["cpf"] : '');
+		$classObject->setCNPJ(isset($objetoPessoa["cnpj"]) ? $objetoPessoa["cnpj"] : '');
+		$classObject->setRG(isset($objetoPessoa["rg"]) ? $objetoPessoa["rg"] : '');
+		$classObject->setUUID(isset($objetoPessoa["uuid"]) ? $objetoPessoa["uuid"] : '123456789');
+
+		return $this->insert($classObject);
+	}
+
+	public function updatePessoa($objetoPessoa)
+	{
+		$classObject = new PessoaFisica();
+
+		$classObject->setCompleteName($objetoPessoa["name"]);
+		$classObject->setCPF(isset($objetoPessoa["cpf"]) ? $objetoPessoa["cpf"] : '');
+		$classObject->setCNPJ(isset($objetoPessoa["cnpj"]) ? $objetoPessoa["cnpj"] : '');
+		$classObject->setRG(isset($objetoPessoa["rg"]) ? $objetoPessoa["rg"] : '');
+		$classObject->setUUID(isset($objetoPessoa["uuid"]) ? $objetoPessoa["uuid"] : '123456789');
+
+		return $this->insert($classObject);
+	}
 }

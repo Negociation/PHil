@@ -2,9 +2,12 @@
 
 namespace Models;
 
-use Doctrine\ORM\Mapping as ORM;
+use Annotations\MER as MER;
 
-class PessoaFisica //extends Person
+/**
+ * @MER\Tabela(nome="person")
+ */
+class PessoaFisica extends Pessoa
 {
 
     /**
@@ -25,7 +28,7 @@ class PessoaFisica //extends Person
     /**
      * @MER\Coluna(nome="uuid", tipo="string")
      */
-	 
+
 
     public function getId()
     {
@@ -40,6 +43,16 @@ class PessoaFisica //extends Person
     public function setCPF($cpf)
     {
         $this->cpf = $cpf;
+    }
+
+    public function getCNPJ()
+    {
+        return $this->cnpj;
+    }
+
+    public function setCNPJ($cnpj)
+    {
+        $this->cnpj = $cnpj;
     }
 
     public function getRG()

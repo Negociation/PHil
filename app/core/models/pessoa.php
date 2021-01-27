@@ -5,13 +5,14 @@ namespace Models;
 use Annotations\MER as MER;
 
 /**
- * @MER\Tabela(nome="pessoas")
+ * @MER\Tabela(nome="person")
  */
-class Pessoa{
-	
-	/**
-	 * @MER\Coluna(nome="nomeusuario",tipo="text")
-	 */
+class Pessoa extends ModelTemplate
+{
+
+    /**
+     * @MER\Coluna(nome="name",tipo="text")
+     */
     protected $completeName;
 
     /**
@@ -19,21 +20,24 @@ class Pessoa{
      * @MER\Id
      */
     protected $id;
-	
-    public function getCompleteName(){
+
+    public function getCompleteName()
+    {
         return $this->completeName;
     }
 
-    public function setCompleteName($name){
+    public function setCompleteName($name)
+    {
         $this->completeName = $name;
     }
-	
-	public function getId(){
-		return $this->id;
-	}
-	
-	public function setId(){
-		return $this->id;
-	}
-	
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 }

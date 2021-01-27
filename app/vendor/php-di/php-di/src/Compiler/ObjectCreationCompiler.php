@@ -19,7 +19,10 @@ use ReflectionProperty;
  */
 class ObjectCreationCompiler
 {
-    private Compiler $compiler;
+    /**
+     * @var Compiler
+     */
+    private $compiler;
 
     public function __construct(Compiler $compiler)
     {
@@ -173,7 +176,7 @@ PHP;
         return $method->getName() . '()';
     }
 
-    private function assertClassIsNotAnonymous(ObjectDefinition $definition) : void
+    private function assertClassIsNotAnonymous(ObjectDefinition $definition)
     {
         if (strpos($definition->getClassName(), '@') !== false) {
             throw InvalidDefinition::create($definition, sprintf(
@@ -183,7 +186,7 @@ PHP;
         }
     }
 
-    private function assertClassIsInstantiable(ObjectDefinition $definition) : void
+    private function assertClassIsInstantiable(ObjectDefinition $definition)
     {
         if ($definition->isInstantiable()) {
             return;

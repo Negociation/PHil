@@ -12,19 +12,25 @@ namespace DI\Definition;
  */
 class DecoratorDefinition extends FactoryDefinition implements Definition, ExtendsPreviousDefinition
 {
-    private ?Definition $decorated = null;
+    /**
+     * @var Definition|null
+     */
+    private $decorated;
 
-    public function setExtendedDefinition(Definition $definition) : void
+    public function setExtendedDefinition(Definition $definition)
     {
         $this->decorated = $definition;
     }
 
-    public function getDecoratedDefinition() : ?Definition
+    /**
+     * @return Definition|null
+     */
+    public function getDecoratedDefinition()
     {
         return $this->decorated;
     }
 
-    public function replaceNestedDefinitions(callable $replacer) : void
+    public function replaceNestedDefinitions(callable $replacer)
     {
         // no nested definitions
     }

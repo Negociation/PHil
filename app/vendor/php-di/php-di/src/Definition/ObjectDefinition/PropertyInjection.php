@@ -11,7 +11,11 @@ namespace DI\Definition\ObjectDefinition;
  */
 class PropertyInjection
 {
-    private string $propertyName;
+    /**
+     * Property name.
+     * @var string
+     */
+    private $propertyName;
 
     /**
      * Value that should be injected in the property.
@@ -23,8 +27,9 @@ class PropertyInjection
      * Use for injecting in properties of parent classes: the class name
      * must be the name of the parent class because private properties
      * can be attached to the parent classes, not the one we are resolving.
+     * @var string|null
      */
-    private ?string $className;
+    private $className;
 
     /**
      * @param string $propertyName Property name
@@ -50,12 +55,15 @@ class PropertyInjection
         return $this->value;
     }
 
-    public function getClassName() : ?string
+    /**
+     * @return string|null
+     */
+    public function getClassName()
     {
         return $this->className;
     }
 
-    public function replaceNestedDefinition(callable $replacer) : void
+    public function replaceNestedDefinition(callable $replacer)
     {
         $this->value = $replacer($this->value);
     }

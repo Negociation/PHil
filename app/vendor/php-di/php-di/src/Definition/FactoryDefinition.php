@@ -13,8 +13,9 @@ class FactoryDefinition implements Definition
 {
     /**
      * Entry name.
+     * @var string
      */
-    private string $name;
+    private $name;
 
     /**
      * Callable that returns the value.
@@ -26,7 +27,7 @@ class FactoryDefinition implements Definition
      * Factory parameters.
      * @var mixed[]
      */
-    private array $parameters;
+    private $parameters = [];
 
     /**
      * @param string $name Entry name
@@ -45,7 +46,7 @@ class FactoryDefinition implements Definition
         return $this->name;
     }
 
-    public function setName(string $name) : void
+    public function setName(string $name)
     {
         $this->name = $name;
     }
@@ -66,7 +67,7 @@ class FactoryDefinition implements Definition
         return $this->parameters;
     }
 
-    public function replaceNestedDefinitions(callable $replacer) : void
+    public function replaceNestedDefinitions(callable $replacer)
     {
         $this->parameters = array_map($replacer, $this->parameters);
     }

@@ -15,7 +15,10 @@ use DI\Definition\Exception\InvalidDefinition;
  */
 class EnvironmentVariableResolver implements DefinitionResolver
 {
-    private DefinitionResolver $definitionResolver;
+    /**
+     * @var DefinitionResolver
+     */
+    private $definitionResolver;
 
     /**
      * @var callable

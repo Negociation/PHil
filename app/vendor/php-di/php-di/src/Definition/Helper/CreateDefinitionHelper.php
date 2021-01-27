@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DI\Definition\Helper;
 
+use DI\Definition\Definition;
 use DI\Definition\Exception\InvalidDefinition;
 use DI\Definition\ObjectDefinition;
 use DI\Definition\ObjectDefinition\MethodInjection;
@@ -16,26 +17,35 @@ use DI\Definition\ObjectDefinition\PropertyInjection;
  */
 class CreateDefinitionHelper implements DefinitionHelper
 {
-    private const DEFINITION_CLASS = ObjectDefinition::class;
+    const DEFINITION_CLASS = ObjectDefinition::class;
 
-    private ?string $className;
+    /**
+     * @var string|null
+     */
+    private $className;
 
-    private ?bool $lazy = null;
+    /**
+     * @var bool|null
+     */
+    private $lazy;
 
     /**
      * Array of constructor parameters.
+     * @var array
      */
-    protected array $constructor = [];
+    protected $constructor = [];
 
     /**
      * Array of properties and their value.
+     * @var array
      */
-    private array $properties = [];
+    private $properties = [];
 
     /**
      * Array of methods and their parameters.
+     * @var array
      */
-    protected array $methods = [];
+    protected $methods = [];
 
     /**
      * Helper for defining an object.
@@ -43,7 +53,7 @@ class CreateDefinitionHelper implements DefinitionHelper
      * @param string|null $className Class name of the object.
      *                               If null, the name of the entry (in the container) will be used as class name.
      */
-    public function __construct(?string $className = null)
+    public function __construct(string $className = null)
     {
         $this->className = $className;
     }
@@ -55,7 +65,7 @@ class CreateDefinitionHelper implements DefinitionHelper
      *
      * @return $this
      */
-    public function lazy() : self
+    public function lazy()
     {
         $this->lazy = true;
 
@@ -72,7 +82,7 @@ class CreateDefinitionHelper implements DefinitionHelper
      *
      * @return $this
      */
-    public function constructor(...$parameters) : self
+    public function constructor(...$parameters)
     {
         $this->constructor = $parameters;
 
@@ -87,7 +97,7 @@ class CreateDefinitionHelper implements DefinitionHelper
      *
      * @return $this
      */
-    public function property(string $property, $value) : self
+    public function property(string $property, $value)
     {
         $this->properties[$property] = $value;
 
@@ -108,7 +118,7 @@ class CreateDefinitionHelper implements DefinitionHelper
      *
      * @return $this
      */
-    public function method(string $method, ...$parameters) : self
+    public function method(string $method, ...$parameters)
     {
         if (! isset($this->methods[$method])) {
             $this->methods[$method] = [];
@@ -119,7 +129,10 @@ class CreateDefinitionHelper implements DefinitionHelper
         return $this;
     }
 
-    public function getDefinition(string $entryName) : ObjectDefinition
+    /**
+     * @return ObjectDefinition
+     */
+    public function getDefinition(string $entryName) : Definition
     {
         $class = $this::DEFINITION_CLASS;
         /** @var ObjectDefinition $definition */

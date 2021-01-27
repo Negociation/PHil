@@ -25,15 +25,20 @@ class ProxyFactory
 {
     /**
      * If true, write the proxies to disk to improve performances.
+     * @var bool
      */
-    private bool $writeProxiesToFile;
+    private $writeProxiesToFile;
 
     /**
      * Directory where to write the proxies (if $writeProxiesToFile is enabled).
+     * @var string|null
      */
-    private ?string $proxyDirectory;
+    private $proxyDirectory;
 
-    private ?LazyLoadingValueHolderFactory $proxyManager = null;
+    /**
+     * @var LazyLoadingValueHolderFactory|null
+     */
+    private $proxyManager;
 
     public function __construct(bool $writeProxiesToFile = false, string $proxyDirectory = null)
     {
@@ -60,7 +65,7 @@ class ProxyFactory
      *
      * @param string $className name of the class to be proxied
      */
-    public function generateProxyClass(string $className) : void
+    public function generateProxyClass(string $className)
     {
         // If proxy classes a written to file then we pre-generate the class
         // If they are not written to file then there is no point to do this
@@ -70,7 +75,7 @@ class ProxyFactory
         }
     }
 
-    private function createProxyManager() : void
+    private function createProxyManager()
     {
         if ($this->proxyManager !== null) {
             return;

@@ -18,7 +18,9 @@ class ComposerStaticInit231d27cd1e93f666ded6433a6f474295
         ),
         'P' => 
         array (
+            'Psr\\Log\\' => 8,
             'Psr\\Container\\' => 14,
+            'PhpDocReader\\' => 13,
         ),
         'O' => 
         array (
@@ -26,6 +28,7 @@ class ComposerStaticInit231d27cd1e93f666ded6433a6f474295
         ),
         'M' => 
         array (
+            'Monolog\\' => 8,
             'Models\\' => 7,
         ),
         'I' => 
@@ -53,13 +56,25 @@ class ComposerStaticInit231d27cd1e93f666ded6433a6f474295
         array (
             0 => __DIR__ . '/../..' . '/core/services',
         ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
         'Psr\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
         ),
+        'PhpDocReader\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-di/phpdoc-reader/src/PhpDocReader',
+        ),
         'Opis\\Closure\\' => 
         array (
             0 => __DIR__ . '/..' . '/opis/closure/src',
+        ),
+        'Monolog\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
         'Models\\' => 
         array (
@@ -91,11 +106,16 @@ class ComposerStaticInit231d27cd1e93f666ded6433a6f474295
         ),
     );
 
+    public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit231d27cd1e93f666ded6433a6f474295::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit231d27cd1e93f666ded6433a6f474295::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit231d27cd1e93f666ded6433a6f474295::$classMap;
 
         }, null, ClassLoader::class);
     }

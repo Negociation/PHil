@@ -21,8 +21,9 @@ final class Injectable
 {
     /**
      * Should the object be lazy-loaded.
+     * @var bool|null
      */
-    private ?bool $lazy = null;
+    private $lazy;
 
     public function __construct(array $values)
     {
@@ -31,7 +32,10 @@ final class Injectable
         }
     }
 
-    public function isLazy() : ?bool
+    /**
+     * @return bool|null
+     */
+    public function isLazy()
     {
         return $this->lazy;
     }

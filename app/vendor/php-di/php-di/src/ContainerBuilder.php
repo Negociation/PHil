@@ -6,7 +6,6 @@ namespace DI;
 
 use DI\Compiler\Compiler;
 use DI\Definition\Source\AnnotationBasedAutowiring;
-use DI\Definition\Source\AttributeBasedAutowiring;
 use DI\Definition\Source\DefinitionArray;
 use DI\Definition\Source\DefinitionFile;
 use DI\Definition\Source\DefinitionSource;
@@ -37,50 +36,74 @@ class ContainerBuilder
 {
     /**
      * Name of the container class, used to create the container.
+     * @var string
      */
-    private string $containerClass;
+    private $containerClass;
 
     /**
      * Name of the container parent class, used on compiled container.
+     * @var string
      */
-    private string $containerParentClass;
+    private $containerParentClass;
 
-    private bool $useAutowiring = true;
+    /**
+     * @var bool
+     */
+    private $useAutowiring = true;
 
-    private bool $useAnnotations = false;
+    /**
+     * @var bool
+     */
+    private $useAnnotations = false;
 
-    private bool $useAttributes = false;
+    /**
+     * @var bool
+     */
+    private $ignorePhpDocErrors = false;
 
     /**
      * If true, write the proxies to disk to improve performances.
+     * @var bool
      */
-    private bool $writeProxiesToFile = false;
+    private $writeProxiesToFile = false;
 
     /**
      * Directory where to write the proxies (if $writeProxiesToFile is enabled).
+     * @var string|null
      */
-    private ?string $proxyDirectory = null;
+    private $proxyDirectory;
 
     /**
      * If PHP-DI is wrapped in another container, this references the wrapper.
+     * @var ContainerInterface
      */
-    private ?ContainerInterface $wrapperContainer = null;
+    private $wrapperContainer;
 
     /**
      * @var DefinitionSource[]|string[]|array[]
      */
-    private array $definitionSources = [];
+    private $definitionSources = [];
 
     /**
      * Whether the container has already been built.
+     * @var bool
      */
-    private bool $locked = false;
+    private $locked = false;
 
-    private ?string $compileToDirectory = null;
+    /**
+     * @var string|null
+     */
+    private $compileToDirectory;
 
-    private bool $sourceCache = false;
+    /**
+     * @var bool
+     */
+    private $sourceCache = false;
 
-    protected string $sourceCacheNamespace = '';
+    /**
+     * @var string
+     */
+    protected $sourceCacheNamespace;
 
     /**
      * Build a container configured for the dev environment.
@@ -107,11 +130,8 @@ class ContainerBuilder
     {
         $sources = array_reverse($this->definitionSources);
 
-        if ($this->useAttributes) {
-            $autowiring = new AttributeBasedAutowiring;
-            $sources[] = $autowiring;
-        } elseif ($this->useAnnotations) {
-            $autowiring = new AnnotationBasedAutowiring;
+        if ($this->useAnnotations) {
+            $autowiring = new AnnotationBasedAutowiring($this->ignorePhpDocErrors);
             $sources[] = $autowiring;
         } elseif ($this->useAutowiring) {
             $autowiring = new ReflectionBasedAutowiring;
@@ -124,8 +144,7 @@ class ContainerBuilder
             if (is_string($definitions)) {
                 // File
                 return new DefinitionFile($definitions, $autowiring);
-            }
-            if (is_array($definitions)) {
+            } elseif (is_array($definitions)) {
                 return new DefinitionArray($definitions, $autowiring);
             }
 
@@ -235,17 +254,15 @@ class ContainerBuilder
     }
 
     /**
-     * Enable or disable the use of PHP 8 attributes to configure injections.
-     *
-     * Disabled by default.
+     * Enable or disable ignoring phpdoc errors (non-existent classes in `@param` or `@var`).
      *
      * @return $this
      */
-    public function useAttributes(bool $bool) : self
+    public function ignorePhpDocErrors(bool $bool) : self
     {
         $this->ensureNotLocked();
 
-        $this->useAttributes = $bool;
+        $this->ignorePhpDocErrors = $bool;
 
         return $this;
     }
@@ -359,7 +376,7 @@ class ContainerBuilder
         return (bool) $this->compileToDirectory;
     }
 
-    private function ensureNotLocked() : void
+    private function ensureNotLocked()
     {
         if ($this->locked) {
             throw new \LogicException('The ContainerBuilder cannot be modified after the container has been built');

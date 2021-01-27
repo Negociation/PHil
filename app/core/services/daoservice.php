@@ -8,88 +8,76 @@ use Models;
 use Annotations;
 use Doctrine\Common\Annotations\AnnotationReader;
 
-class DAOService{
-	
+class DAOService
+{
+
 	private $dbConnection;
 	private $annotationReader;
-	
-	function __construct(PDOService $dbConnection){
+
+	function __construct(PDOService $dbConnection)
+	{
 		$this->dbConnection = $dbConnection;
 	}
-	
-	/* SELECTS */
-	
-	protected function getAll($classObject){	
-		$queryObject = new QueryService($classObject);		
 
+	/* SELECTS */
+
+	protected function getAll($classObject)
+	{
+		$queryObject = new QueryService($classObject);
+
+		$result = $this->dbConnection->run($queryObject->get_selectAllQuery())->fetchAll(PDO::FETCH_ASSOC);
+
+		return (is_array($result) ? $result : false);
+	}
+
+	protected function getByParam($classObject, $param)
+	{
 		try {
-			$stmt = $this->dbConnection->run($queryObject->get_selectAllQuery());
+			$sql = 'SELECT * FROM .' . $table . ' where ' . $column . ' = :param';
+			$stmt = $this->dbConnection->prepare($sql);
+			$stmt->bindValue(':param', $param);
+			$stmt->execute();
+
 			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		}catch(Exception $e){
-			echo "oi";
+		} catch (\Exception $e) {
 			//If not return false
 			return false;
 			exit;
 		}
 		return $result;
 	}
-	
-	protected function getByParam($table,$column,$param){
-		try {
-			$sql = 'SELECT * FROM .'.$table.' where '.$column.' = :param';
-			$stmt = $this->dbConnection->prepare($sql);
-			$stmt->bindValue(':param', $param);
-			$stmt->execute();
 
-			$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-			
-		}catch(Exception $e){
-			//If not return false
-			return false;
-			exit;
-		}
-		return $result;	
-	}
-	
-	protected function getById($table,$id){
-		try{
-			$sql = 'SELECT * FROM '.$table.' WHERE id = :id';
-			$stmt = $this->dbConnection->prepare($sql);
-			$stmt->bindParam(':id', $id);
-			$stmt->execute();
-			$result = $stmt->fetch();
-		}catch(Exception $e){
-			//If not return false
-			return false;
-			exit;
-		}
-		return $result;		
+	protected function getById($classObject)
+	{
+		$queryObject = new QueryService($classObject);
+
+		$result = $this->dbConnection->run($queryObject->get_selectIdQuery()[0], $queryObject->get_selectIdQuery()[1])->fetch(PDO::FETCH_ASSOC);
+
+		return (is_array($result) ? $result : false);
 	}
 
 	/* INSERT */
-	protected function insert($classObject){	
-		//$classObject = new Models\Person(); /**/
-		$queryObject = new QueryService($classObject);		
-		return $this->dbConnection->run($queryObject->get_insertQuery(),$queryObject->get_bindParams());
+	protected function insert($classObject)
+	{
+		$queryObject = new QueryService($classObject);
+
+		return $this->dbConnection->run($queryObject->get_insertQuery()[0], $queryObject->get_insertQuery()[1]);
 	}
-	
+
 	/* UPDATE */
-	
-	
-	/* DROP */
-	protected function drop($table, $id){
-		$sql = 'DELETE FROM' . $table . 'WHERE id = :id';
-		try{
-			$stmt = $this->dbConnection->prepare($sql);
-			$stmt->bindValue('id', $id);
-			$stmt->execute();
-		}catch(Exception $e){
-			return false;
-		}
-		return true;
+	protected function update($classObject)
+	{
+		$queryObject = new QueryService($classObject);
+
+		return $this->dbConnection->run($queryObject->get_updateQuery()[0], $queryObject->get_updateQuery()[1]);
 	}
-	
+
+	/* DROP */
+	protected function delete($classObject)
+	{
+
+		$queryObject = new QueryService($classObject);
+
+		return $this->dbConnection->run($queryObject->get_deleteQuery()[0], $queryObject->get_deleteQuery()[1]);
+	}
 }
-
-
-?>

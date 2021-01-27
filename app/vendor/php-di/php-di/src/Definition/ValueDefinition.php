@@ -15,8 +15,9 @@ class ValueDefinition implements Definition, SelfResolvingDefinition
 {
     /**
      * Entry name.
+     * @var string
      */
-    private string $name = '';
+    private $name = '';
 
     /**
      * @var mixed
@@ -36,7 +37,7 @@ class ValueDefinition implements Definition, SelfResolvingDefinition
         return $this->name;
     }
 
-    public function setName(string $name) : void
+    public function setName(string $name)
     {
         $this->name = $name;
     }
@@ -59,7 +60,7 @@ class ValueDefinition implements Definition, SelfResolvingDefinition
         return true;
     }
 
-    public function replaceNestedDefinitions(callable $replacer) : void
+    public function replaceNestedDefinitions(callable $replacer)
     {
         // no nested definitions
     }

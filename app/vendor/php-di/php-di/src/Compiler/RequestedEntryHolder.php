@@ -11,7 +11,10 @@ use DI\Factory\RequestedEntry;
  */
 class RequestedEntryHolder implements RequestedEntry
 {
-    private string $name;
+    /**
+     * @var string
+     */
+    private $name;
 
     public function __construct(string $name)
     {
