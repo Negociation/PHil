@@ -50,7 +50,7 @@ class DAOService
 
 		$result = $this->dbConnection->run($queryObject->get_selectIdQuery()[0], $queryObject->get_selectIdQuery()[1])->fetch(PDO::FETCH_ASSOC);
 
-		return (is_array($result) ? $result : false);
+		return $result;
 	}
 
 	/* INSERT */

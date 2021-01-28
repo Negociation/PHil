@@ -132,7 +132,6 @@ class JsonService{
 			}
 			
 			
-			
 			if(is_array($arrayObject[0])){					
 				foreach($arrayObject[0] as $index => $obj){
 					if(isset(self::$mapping[$index])){

@@ -24,10 +24,11 @@ class PessoaDAO extends DAOService
 	public function getPessoaById($param)
 	{
 		$classObject = new PessoaFisica();
-
 		$classObject->setId($param);
-
-		return $this->getById($classObject);
+		
+		$result = $this->getById($classObject);
+		
+		return is_array($result) ? JsonService::encode($result, $classObject) : false;
 	}
 
 	public function getPessoaByCPF($param)
