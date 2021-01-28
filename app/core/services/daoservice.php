@@ -23,6 +23,11 @@ class DAOService
 
 	protected function getAll($classObject)
 	{
+		
+		//Exemplo de Codificação do Json *apagar
+		echo JsonService::encode(array(["name" => "1"],$classObject));
+		
+		
 		$queryObject = new QueryService($classObject);
 
 		$result = $this->dbConnection->run($queryObject->get_selectAllQuery())->fetchAll(PDO::FETCH_ASSOC);
