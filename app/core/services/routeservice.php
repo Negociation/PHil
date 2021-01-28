@@ -35,7 +35,7 @@ class RouteService{
 	}
 	
 	protected function validateURI($requestURI){
-		$parsedURI;
+		// $parsedURI;
 		$finalURI = [];
 		
 		$requestURI = strtolower(trim((substr($requestURI, 0,1) == "/" ? substr($_SERVER["REQUEST_URI"],1) : $requestURI)));
@@ -59,6 +59,3 @@ class RouteService{
 		return $finalURI;
 	}
 }
-
-
-?>

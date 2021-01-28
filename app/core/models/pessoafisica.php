@@ -28,6 +28,7 @@ class PessoaFisica extends Pessoa
     /**
      * @MER\Coluna(nome="uuid", tipo="string")
      */
+    protected $uuid;
 
 
     public function getId()

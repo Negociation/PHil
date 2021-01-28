@@ -29,8 +29,6 @@ class QueryService
 			$reflectionClass = new \ReflectionClass(get_class($modelObject));
 			$annotationReader = new AnnotationReader();
 
-			// print_r($annotationReader->getClassAnnotations($reflectionClass));
-
 			//Get Table Name
 			$this->tableName = $annotationReader->getClassAnnotations($reflectionClass)[0]->nome;
 
@@ -102,7 +100,7 @@ class QueryService
 
 							//Generate Update
 							$updateBinds = $this->bindParams;
-							$this->updateQuery = array("UPDATE " . $this->tableName . " SET \ WHERE " . $this->bindParams[$this->idField][0] . " = " . $this->bindParams[$this->idField][1]);
+							$this->updateQuery = array("UPDATE " . $this->tableName . " SET " . "%coluna = %valor" . " WHERE " . $this->bindParams[$this->idField][0] . " = " . $this->bindParams[$this->idField][1]);
 							unset($updateBinds);
 
 							//Generate Delete
@@ -134,7 +132,7 @@ class QueryService
 
 	public function get_updateQuery()
 	{
-		return $this->insertQuery;
+		return $this->updateQuery;
 	}
 
 	public function get_deleteQuery()
