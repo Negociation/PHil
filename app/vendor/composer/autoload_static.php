@@ -356,12 +356,12 @@ class ComposerStaticInit231d27cd1e93f666ded6433a6f474295
         'Psr\\Log\\Test\\DummyTest' => __DIR__ . '/..' . '/psr/log/Psr/Log/Test/DummyTest.php',
         'Psr\\Log\\Test\\LoggerInterfaceTest' => __DIR__ . '/..' . '/psr/log/Psr/Log/Test/LoggerInterfaceTest.php',
         'Psr\\Log\\Test\\TestLogger' => __DIR__ . '/..' . '/psr/log/Psr/Log/Test/TestLogger.php',
-        'Services\\DAOService' => __DIR__ . '/../..' . '/core/services/daoservice.php',
-        'Services\\JsonService' => __DIR__ . '/../..' . '/core/services/jsonservice.php',
-        'Services\\PDOService' => __DIR__ . '/../..' . '/core/services/pdoservice.php',
-        'Services\\PessoaDAO' => __DIR__ . '/../..' . '/core/services/PessoaDAO.php',
-        'Services\\QueryService' => __DIR__ . '/../..' . '/core/services/queryservice.php',
-        'Services\\RouteService' => __DIR__ . '/../..' . '/core/services/routeservice.php',
+        'Services\\DAOService' => __DIR__ . '/../..' . '/core/services/system/daoservice.php',
+        'Services\\JsonService' => __DIR__ . '/../..' . '/core/services/system/jsonservice.php',
+        'Services\\PDOService' => __DIR__ . '/../..' . '/core/services/system/pdoservice.php',
+        'Services\\PessoaDAO' => __DIR__ . '/../..' . '/core/services/DAO/PessoaDAO.php',
+        'Services\\QueryService' => __DIR__ . '/../..' . '/core/services/system/queryservice.php',
+        'Services\\RouteService' => __DIR__ . '/../..' . '/core/services/system/routeservice.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

@@ -13,7 +13,7 @@ class PDOService extends PDO{
 		
 		//If theres no Config File passed then use the default one
 		if($configFile == ""){
-			$configFile = dirname(__DIR__,1).'\settings.ini';
+			$configFile = dirname(__DIR__,2).'\settings.ini';
 		}
 
 		//Parse and Validate Config File

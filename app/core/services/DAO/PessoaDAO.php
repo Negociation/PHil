@@ -9,7 +9,16 @@ class PessoaDAO extends DAOService
 
 	public function getPessoas()
 	{
-		return $this->getAll(new PessoaFisica());
+		
+
+		$result = $this->getAll(new PessoaFisica());
+		$result = [["name" => "1","id" => "1"],["name" => "1","id" => "1"]];
+		$resultArray = [];
+		foreach($result as $key => $row){ //Adicionar validação de multiplos objetos para a classe jsonService;
+			array_push($resultArray,json_decode(JsonService::encode(array($row,new PessoaFisica()))));
+		}
+		
+		return $resultArray;
 	}
 
 	public function getPessoaById($param)

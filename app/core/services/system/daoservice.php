@@ -18,12 +18,7 @@ class DAOService
 
 	/* SELECTS */
 
-	protected function getAll($classObject)
-	{
-		
-		//Exemplo de Codificação do Json *apagar
-		echo JsonService::encode(array(["name" => "1"],$classObject));
-		
+	protected function getAll($classObject){
 		
 		$queryObject = new QueryService($classObject);
 

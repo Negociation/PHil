@@ -15,9 +15,18 @@ class JsonService{
 	protected static $jsonOutput = [];
 	protected static $objectOutput;
 	
+	//Initialize
+	static function init(){
+		self::$properties = [];
+		self::$mapping = [];
+	}
+		
 	//Get a JSON Output
 	public static function encode($convertObject){
 	
+		//Initialize;
+		self::init();
+
 
 		if(is_object($modelObject = $convertObject)){ /* CONVERT OBJECTS TO JSON */
 			
@@ -41,10 +50,11 @@ class JsonService{
 				foreach ($propertyArray[1] as $propKey => $property){
 					if(get_class($property) == 'Annotations\MER\Coluna'){
 						$indexName = isset($property->nome) ? $property->nome : $propertyArray[$propKey];
-						
+
 						if(!isset($jsonOutput[$indexName])){
 							self::$jsonOutput[$indexName] = $modelObject->__get($propertyArray[$propKey]);			
 						}else{
+							
 							throw new \Exception('Multiple Paramerts seted with the same Json Key at (' . get_class($modelObject) . ').');
 							return false;
 						}
@@ -79,10 +89,11 @@ class JsonService{
 				foreach ($propertyArray[1] as $propKey => $property){
 					if(get_class($property) == 'Annotations\MER\Coluna'){
 
-						if(!isset($mapping[$property->nome])){
+
+						if(!isset(self::$mapping[$property->nome])){
 							$arrayColuna = $property->nome;
 						}else{
-							throw new \Exception('Multiple Paramerts seted with the same Column at (' . get_class($modelObject) . ').');
+							throw new \Exception('Multiple Paramerts seted with the same Column at (' . get_class($arrayObject[1]) . ').');
 							return false;
 						}
 					}
@@ -122,42 +133,17 @@ class JsonService{
 			
 			
 			
-			if(is_array($arrayObject[0])){
-				
-			
-					
-				
+			if(is_array($arrayObject[0])){					
 				foreach($arrayObject[0] as $index => $obj){
 					if(isset(self::$mapping[$index])){
 						self::$jsonOutput[self::$mapping[$index]] = $obj;
 					}
-				}
-				
+				}	
 				return json_encode(self::$jsonOutput);
 			}else{
 				throw new \Exception('Was expecting a Array input to convert the json');
 				return false;
 			}
-			
-			
-
-			
-			/* TODO */
-			// Relacionar a declaração de coluna com a declaração de Json em um Array de Mapeamento OK
-			// Ler a entrada de dados e verificar se alguma coluna do array bate com a coluna de Json
-			// Elaborar um Array [Json] = Valor do Array
-			// Caso a entrada seja um Array de Array tratar
-			
-			
-
-
-
-
-
-			
-			
-			
-			
 		}else{
 			return false;
 		}
