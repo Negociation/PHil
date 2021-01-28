@@ -104,8 +104,8 @@ class QueryService
 							unset($updateBinds);
 
 							//Generate Delete
-							$deleteBinds = $this->bindParams;
-							$this->deleteQuery = array("DELETE FROM " . $this->tableName . " WHERE " . $this->bindParams[$this->idField][1] . "= ", $deleteBinds);
+							$deleteBinds = array($this->bindParams[$this->idField]);
+							$this->deleteQuery = array("DELETE FROM " . $this->tableName . " WHERE " . $this->bindParams[$this->idField][0] . " = " . $this->bindParams[$this->idField][1], $deleteBinds);
 							unset($deleteBinds);
 						}
 					}

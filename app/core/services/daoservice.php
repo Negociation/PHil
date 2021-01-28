@@ -3,16 +3,13 @@
 namespace Services;
 
 use PDO;
-use DI;
-use Models;
-use Annotations;
-use Doctrine\Common\Annotations\AnnotationReader;
+
+use function PHPSTORM_META\type;
 
 class DAOService
 {
 
 	private $dbConnection;
-	private $annotationReader;
 
 	function __construct(PDOService $dbConnection)
 	{
@@ -61,7 +58,9 @@ class DAOService
 	{
 		$queryObject = new QueryService($classObject);
 
-		return $this->dbConnection->run($queryObject->get_insertQuery()[0], $queryObject->get_insertQuery()[1]);
+		$result = $this->dbConnection->run($queryObject->get_insertQuery()[0], $queryObject->get_insertQuery()[1]);
+
+		return (is_array($result) ? $result : false);
 	}
 
 	/* UPDATE */
@@ -69,15 +68,20 @@ class DAOService
 	{
 		$queryObject = new QueryService($classObject);
 
-		return $this->dbConnection->run($queryObject->get_updateQuery()[0], $queryObject->get_updateQuery()[1]);
+		$result = $this->dbConnection->run($queryObject->get_updateQuery()[0], $queryObject->get_updateQuery()[1]);
+
+		return (is_array($result) ? $result : false);
 	}
 
-	/* DROP */
+	/* DELETE */
 	protected function delete($classObject)
 	{
-
 		$queryObject = new QueryService($classObject);
 
-		return $this->dbConnection->run($queryObject->get_deleteQuery()[0], $queryObject->get_deleteQuery()[1]);
+		print_r($queryObject->get_deleteQuery());
+
+		$result = $this->dbConnection->run($queryObject->get_deleteQuery()[0], $queryObject->get_deleteQuery()[1]);
+
+		return (is_array($result) ? $result : false);
 	}
 }

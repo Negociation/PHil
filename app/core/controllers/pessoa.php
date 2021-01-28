@@ -12,8 +12,8 @@ class Pessoa extends ControllerTemplate
 
 		//Person Objects Retrieved from Database (can be one record or a array or records)
 
-
 		switch ($_SERVER['REQUEST_METHOD']) {
+
 			case 'GET':
 
 				//Get All Persons from database using the dependency container
@@ -26,6 +26,7 @@ class Pessoa extends ControllerTemplate
 					http_response_code(422);
 				}
 				break;
+
 			case 'POST':
 				$pessoaObject =  json_decode(file_get_contents('php://input'), true);
 
@@ -38,10 +39,24 @@ class Pessoa extends ControllerTemplate
 					http_response_code(422);
 				}
 				break;
+
 			case 'PUT':
 				$pessoaObject =  json_decode(file_get_contents('php://input'), true);
 
 				$putResult = ($this->container->get('Services\PessoaDAO'))->updatePessoa($pessoaObject);
+
+				if ($putResult) {
+					http_response_code(200);
+					echo json_encode($putResult);
+				} else {
+					http_response_code(422);
+				}
+				break;
+
+			case 'DELETE':
+				$pessoaObject = json_decode(file_get_contents('php://input'), true);
+
+				$putResult = ($this->container->get('Services\PessoaDAO'))->deletePessoa($pessoaObject);
 
 				if ($putResult) {
 					http_response_code(200);
