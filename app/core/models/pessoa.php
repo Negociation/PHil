@@ -3,7 +3,7 @@
 namespace Models;
 
 use Annotations\MER as MER;
-
+use Annotations\Json as JSON;
 /**
  * @MER\Tabela(nome="person")
  */
@@ -12,11 +12,13 @@ class Pessoa extends ModelTemplate
 
     /**
      * @MER\Coluna(nome="name",tipo="text")
+	 * @JSON\jsonDeclare(nome="nomeusuario");
      */
     protected $completeName;
 
     /**
      * @MER\Coluna(nome="id", tipo="integer")
+	 * @JSON\jsonDeclare(nome="id");
      * @MER\Id
      */
     protected $id;

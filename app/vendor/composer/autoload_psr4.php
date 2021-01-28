@@ -19,4 +19,5 @@ return array(
     'DI\\' => array($vendorDir . '/php-di/php-di/src'),
     'Controllers\\' => array($baseDir . '/core/controllers'),
     'Annotations\\MER\\' => array($baseDir . '/core/annotations'),
+    'Annotations\\Json\\' => array($baseDir . '/core/annotations'),
 );

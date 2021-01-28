@@ -1,12 +1,12 @@
 <?php
 
-namespace Annotations\MER;
+namespace Annotations\Json;
 
 /**
  * @Annotation
  */
 
-class JsonDecode
+class JsonDeclare
 {
 
 	public $nome;
