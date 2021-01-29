@@ -4,20 +4,19 @@ namespace Services;
 
 use Models\PessoaFisica;
 
+use function PHPSTORM_META\type;
+
 class PessoaDAO extends DAOService
 {
 
 	public function getPessoas()
 	{
-		
-
 		$result = $this->getAll(new PessoaFisica());
-		$result = [["name" => "1","id" => "1"],["name" => "1","id" => "1"]];
 		$resultArray = [];
-		foreach($result as $key => $row){ //Adicionar validação de multiplos objetos para a classe jsonService;
-			array_push($resultArray,json_decode(JsonService::encode(array($row,new PessoaFisica()))));
+		foreach ($result as $key => $row) { //Adicionar validação de multiplos objetos para a classe jsonService;
+			array_push($resultArray, json_decode(JsonService::encode(array($row, new PessoaFisica()))));
 		}
-		
+
 		return $resultArray;
 	}
 
@@ -25,9 +24,9 @@ class PessoaDAO extends DAOService
 	{
 		$classObject = new PessoaFisica();
 		$classObject->setId($param);
-		
+
 		$result = $this->getById($classObject);
-		
+
 		return is_array($result) ? JsonService::encode($result, $classObject) : false;
 	}
 
@@ -55,59 +54,27 @@ class PessoaDAO extends DAOService
 
 	public function updatePessoa($param)
 	{
-
-		// Verifica se o ID foi passado como parâmetro;
 		if (isset($param['id'])) {
 
-			// Retorna os dados armazenados no banco de dados;
-			$storedData = $this->getPessoaById($param['id']);
+			$personToUpdate = new PessoaFisica();
+			$personToUpdate->setId($param['id']);
+			$result = $this->getById($personToUpdate);
 
-			// Verifica se foi encontrado algum dado com base no ID;
-			if (is_array($storedData)) {
-
-				$updateObject = new PessoaFisica();
-
-				// Dados que não podem ser alterados;
-				$updateObject->setId($storedData['id']);
-				$updateObject->setUUID($storedData['uuid']);
-
-				// Dados que serão alterados:
-				if (isset($param['name'])) {
-					strcmp($param['name'], $storedData['name']) == 0 ?
-						$updateObject->setCompleteName($storedData['name']) : $updateObject->setCompleteName($param['name']);
-				} else {
-					$updateObject->setCompleteName($storedData['name']);
-				}
-
-				if (isset($param['cpf'])) {
-					strcmp($param['cpf'], $storedData['cpf']) == 0 ?
-						$updateObject->setCPF($storedData['cpf']) : $updateObject->setCPF($param['cpf']);
-				} else {
-					$updateObject->setCPF($storedData['cpf']);
-				}
-
-				if (isset($param['rg'])) {
-					strcmp($param['rg'], $storedData['rg']) == 0 ?
-						$updateObject->setRG($storedData['rg']) : $updateObject->setRG($param['rg']);
-				} else {
-					$updateObject->setRG($storedData['rg']);
-				}
-
-				if (isset($param['cnpj'])) {
-					strcmp($param['cnpj'], $storedData['cnpj']) == 0 ?
-						$updateObject->setCNPJ($storedData['cnpj']) : $updateObject->setCNPJ($param['cnpj']);
-				} else {
-					$updateObject->setCNPJ($storedData['cnpj']);
-				}
-
-				// Salva novos dados no BD;
-				return $this->update($updateObject);
-			} else {
-				echo "ERRO->updatePessoa(): Pessoa não encontrada\n";
-				return false;
+			foreach ($param as $key => $row) {
+				if ($key != 'id')
+					if (!strcmp($row, $result[$key]) == 0)
+						$result[$key] = $param[$key];
 			}
+
+			foreach ($result as $key => $row) {
+				if ($key != 'id') {
+					$personToUpdate->__set($key, $result[$key]);
+				}
+			}
+			// return $this->update($personToUpdate);
+
 		} else {
-			echo "ERRO->updatePessoa(): ID não foi enviado no corpo da requisição\n";
+			echo json_encode(array("message" => "Error: ID not send on requisitions body"));
 			return false;
 		}
 	}
@@ -122,8 +89,7 @@ class PessoaDAO extends DAOService
 
 			return $this->delete($classObject);
 		} else {
-			echo "ERRO->deletePessoa(): ID não foi enviado no corpo da requisição\n";
-
+			echo json_encode(array("message" => "Error: ID not send on requisitions body"));
 			return false;
 		}
 	}

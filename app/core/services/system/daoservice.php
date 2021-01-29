@@ -18,8 +18,8 @@ class DAOService
 
 	/* SELECTS */
 
-	protected function getAll($classObject){
-		
+	protected function getAll($classObject)
+	{
 		$queryObject = new QueryService($classObject);
 
 		$result = $this->dbConnection->run($queryObject->get_selectAllQuery())->fetchAll(PDO::FETCH_ASSOC);

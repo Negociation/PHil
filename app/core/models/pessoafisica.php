@@ -3,6 +3,7 @@
 namespace Models;
 
 use Annotations\MER as MER;
+use Annotations\Json as JSON;
 
 /**
  * @MER\Tabela(nome="person")
@@ -12,21 +13,25 @@ class PessoaFisica extends Pessoa
 
     /**
      * @MER\Coluna(nome="cpf", tipo="string")
+     * * @JSON\jsonDeclare(nome="cpf")
      */
     protected $cpf;
 
     /**
      * @MER\Coluna(nome="cnpj", tipo="string")
+     * * @JSON\jsonDeclare(nome="cnpj")
      */
     protected $cnpj;
 
     /**
      * @MER\Coluna(nome="rg", tipo="string")
+     * * @JSON\jsonDeclare(nome="rg")
      */
     protected $rg;
 
     /**
      * @MER\Coluna(nome="uuid", tipo="string")
+     * * @JSON\jsonDeclare(nome="uuid")
      */
     protected $uuid;
 

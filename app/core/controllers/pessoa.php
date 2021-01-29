@@ -45,6 +45,7 @@ class Pessoa extends ControllerTemplate
 
 				$putResult = ($this->container->get('Services\PessoaDAO'))->updatePessoa($pessoaObject);
 
+				print_r($putResult);
 				if ($putResult) {
 					http_response_code(200);
 					echo json_encode($putResult);
