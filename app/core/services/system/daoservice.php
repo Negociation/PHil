@@ -60,7 +60,7 @@ class DAOService
 
 		$result = $this->dbConnection->run($queryObject->get_insertQuery()[0], $queryObject->get_insertQuery()[1]);
 
-		return (is_array($result) ? true : false);
+		return ($result ? true : false);
 	}
 
 	/* UPDATE */
@@ -69,9 +69,10 @@ class DAOService
 		$queryObject = new QueryService($classObject);
 
 		if ($queryObject->get_idStatus()) {
+
 			$result = $this->dbConnection->run($queryObject->get_updateQuery()[0], $queryObject->get_updateQuery()[1]);
 
-			return (is_array($result) ? true : false);
+			return ($result ? $this->getById($classObject) : false);
 		} else {
 			return false;
 		}

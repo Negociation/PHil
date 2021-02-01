@@ -18,4 +18,14 @@ class ModelTemplate
             return false;
         }
     }
+
+    public function unset($name)
+    {
+        unset($this->$name);
+    }
+
+    public function isset($name)
+    {
+        return isset($this->$name);
+    }
 }

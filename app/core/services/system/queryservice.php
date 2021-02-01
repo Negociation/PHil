@@ -61,11 +61,9 @@ class QueryService
 
 					//Prepare SQL Binds
 					if (get_class($property) == 'Annotations\MER\Coluna') {
+
 						$this->translatedObject[$property->nome] = $mappingName[$key];
 						array_push($this->bindParams, [$property->nome, $modelObject->__get($mappingName[$key])]);
-						var_dump($modelObject->__get($mappingName[$key]));
-						if (is_null($modelObject->__get($mappingName[$key]))) {
-						}
 					}
 				}
 
@@ -107,29 +105,27 @@ class QueryService
 
 							//Generate Update
 							// $this->updateQuery = array("UPDATE person SET name = 'Natan Blabla', rg = '000000' WHERE id = 4");
-							$updateBinds = $this->bindParams;
+							$updateBinds = [];
+							$updateString = "";
 
-							foreach ($updateBinds as $key => $updateBind) {
+							foreach ($this->bindParams as $key => $bindParam) {
 
-								if (empty($updateBind[1])) {
-									echo $updateBind[1];
-									echo "hoy";
-								} else {
-									// print_r($updateBind);
+								if ($modelObject->isset($mappingName[$key])) {
+									array_push($updateBinds, $bindParam);
+									if ($key != $this->idField) {
+										$updateString .= " " . $bindParam[0] . "=:" . $bindParam[0] . ",";
+									}
+								}
+
+								if ($key === array_key_last($this->bindParams)) {
+									$updateString = (substr($updateString, -1, 1) == ',') ? substr($updateString, 0, -1) : $updateString;
 								}
 							}
 
-							$this->updateQuery = array("UPDATE " . $this->tableName . " SET " . "%coluna = %valor" . " WHERE " . $this->bindParams[$this->idField][0] . " = " . $this->bindParams[$this->idField][1], $updateBinds);
-							unset($updateBinds);
+							$this->updateQuery = array("UPDATE " . $this->tableName . " SET " . $updateString . " WHERE " . $this->bindParams[$this->idField][0] . " = :" . $this->bindParams[$this->idField][0], $updateBinds);
 
-							// foreach($userdata as $key => $value){
-							// 	$sql = $this->db->prepare("UPDATE `users` SET :key = :value WHERE `id` = :userid");
-							// 	$sql->bindParam(':key', $key);
-							// 	$sql->bindParam(':value', $value);
-							// 	$sql->bindParam(':userid', $userid);
-							// 	$sql->execute();
-							// 	);
-							// }
+							unset($updateBinds);
+							unset($updateQuery);
 
 
 							//Generate Delete
@@ -141,15 +137,16 @@ class QueryService
 				}
 			}
 
-			/*
+
 			// TESTE DE QUERYS
-			echo $this->insertQuery;
+			/* 
+			echo $this->insertQuery[0];
 			echo "\n";
 			echo $this->selectAllQuery;
 			echo "\n";
-			echo $this->updateQuery;
+			echo $this->updateQuery[0];
 			echo "\n";
-			echo $this->dropQuery;			
+			echo $this->deleteQuery[0];
 			*/
 		}
 	}

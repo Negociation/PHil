@@ -30,9 +30,8 @@ class Pessoa extends ControllerTemplate
 
 				$postResult = ($this->container->get('Services\PessoaDAO'))->insertPessoa($this->httpInput);
 
-				if (!$postResult) {
+				if ($postResult) {
 					http_response_code(200);
-					// echo json_encode($postResult);
 				} else {
 					http_response_code(422);
 				}
@@ -41,7 +40,7 @@ class Pessoa extends ControllerTemplate
 			case 'PUT':
 				$putResult = ($this->container->get('Services\PessoaDAO'))->updatePessoa($this->httpInput);
 
-				if (!$putResult) {
+				if ($putResult) {
 					http_response_code(200);
 					echo json_encode($putResult);
 				} else {
@@ -54,7 +53,6 @@ class Pessoa extends ControllerTemplate
 
 				if ($deleteResult) {
 					http_response_code(200);
-					echo json_encode($deleteResult);
 				} else {
 					http_response_code(422);
 				}

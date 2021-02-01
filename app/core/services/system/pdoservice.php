@@ -25,7 +25,7 @@ class PDOService extends PDO
 		if (!$this->parseFailed) {
 			try {
 				parent::__construct("mysql:host=" . $this->dbConfig['database']['host'] . ";dbname=" . $this->dbConfig['database']['name'], $this->dbConfig['database']['user'], $this->dbConfig['database']['password']);
-			} catch (PDOException $e) {
+			} catch (\PDOException $e) {
 				$this->conectionFailed = true;
 			}
 		}
@@ -40,7 +40,7 @@ class PDOService extends PDO
 				$stmt->bindValue($bindParam[0], $bindParam[1]);
 			}
 			$stmt->execute();
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$stmt = false;
 			exit;
 		}

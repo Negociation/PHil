@@ -176,10 +176,7 @@ class JsonService
 							if (isset($jsonObject[$property->nome])) {
 								$classObject->__set($propertyArray[0], (empty($jsonObject[$property->nome]) ? "" : $jsonObject[$property->nome]));
 							} else {
-								echo "qualqeurporcaria ";
-								$teste = null;
-								var_dump($teste);
-								$classObject->__set($propertyArray[0], $teste);
+								$classObject->unset($propertyArray[0]);
 							}
 						}
 					}

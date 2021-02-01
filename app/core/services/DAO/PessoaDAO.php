@@ -43,6 +43,7 @@ class PessoaDAO extends DAOService
 		$classObject = new PessoaFisica();
 
 		if (($classObject = JsonService::decode($param, $classObject))) {
+
 			return $this->insert($classObject);
 		}
 	}
@@ -53,44 +54,15 @@ class PessoaDAO extends DAOService
 		$classObject = new PessoaFisica();
 
 		if (($classObject = JsonService::decode($param, $classObject))) {
-			return $this->update($classObject);
+
+			$result = $this->update($classObject);
+
+			return JsonService::encode(array($result, new PessoaFisica()));
 		}
-
-		// if (isset($param['id'])) {
-
-		// 	$classObject = new PessoaFisica();
-		// 	$classObject->setId($param['id']);
-		// 	$getResult = $this->getById($classObject);
-
-		// 	if ($getResult) {
-
-		// 		JsonService::decode($param, $classObject);
-
-		// foreach ($param as $key => $row) {
-		// 	if ($key != 'id')
-		// 		if (!strcmp($row, $getResult[$key]) == 0) $getResult[$key] = $param[$key];
-		// }
-		// foreach ($getResult as $key => $row) {
-		// 	if ($key != 'id') {
-		// 		$classObject->__set($key, $getResult[$key]);
-		// 	}
-		// }
-
-		// 		return $this->update($classObject);
-		// 	} else {
-		// 		echo json_encode(array("message" => "Error: Data not found on BD"));
-		// 		return false;
-		// 	}
-		// } else {
-		// 	echo json_encode(array("message" => "Error: ID not send on requisitions body"));
-		// 	return false;
-		// }
 	}
 
 	public function deletePessoa($param)
 	{
-		$jsonObject = json_decode($param, true);
-
 		if (isset($param['id'])) {
 
 			$classObject = new PessoaFisica();
