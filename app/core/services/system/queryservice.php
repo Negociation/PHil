@@ -63,6 +63,9 @@ class QueryService
 					if (get_class($property) == 'Annotations\MER\Coluna') {
 						$this->translatedObject[$property->nome] = $mappingName[$key];
 						array_push($this->bindParams, [$property->nome, $modelObject->__get($mappingName[$key])]);
+						var_dump($modelObject->__get($mappingName[$key]));
+						if (is_null($modelObject->__get($mappingName[$key]))) {
+						}
 					}
 				}
 
@@ -76,6 +79,7 @@ class QueryService
 						if ($bindKey != $this->idField) {
 							$values = (($bindKey === array_key_last($this->bindParams)) ? ($values . $bindParam[0]) : ($values . $bindParam[0] . ","));
 							$binds = ($bindKey === array_key_last($this->bindParams)) ? $binds . ":" . $bindParam[0] : $binds . ":" . $bindParam[0] . ",";
+						} else {
 						}
 
 
@@ -84,11 +88,6 @@ class QueryService
 							$values = (substr($values, -1, 1) == ',') ? substr($values, 0, -1) : $values;
 							$binds = (substr($binds, -1, 1) == ',') ? substr($binds, 0, -1) : $binds;
 
-							//Generate Insert
-							$insertBinds = $this->bindParams;
-							unset($insertBinds[$this->idField]);
-							$this->insertQuery =  array("INSERT INTO " . $this->tableName . "(" . $values . ") VALUES(" . $binds . ")", $insertBinds);
-							unset($insertBinds);
 
 							//Generate Select All
 							$this->selectAllQuery = "SELECT * FROM " . $this->tableName . " order by " . $this->bindParams[$this->idField][0];
@@ -98,10 +97,40 @@ class QueryService
 							$selectIdBinds = array($this->bindParams[$this->idField]);
 							$this->selectIdQuery = array('SELECT * FROM ' . $this->tableName . ' WHERE ' . $this->bindParams[$this->idField][0] . " = " . $this->bindParams[$this->idField][1], $selectIdBinds);
 
+
+							//Generate Insert
+							$insertBinds = $this->bindParams;
+							unset($insertBinds[$this->idField]);
+							$this->insertQuery =  array("INSERT INTO " . $this->tableName . "(" . $values . ") VALUES(" . $binds . ")", $insertBinds);
+							unset($insertBinds);
+
+
 							//Generate Update
+							// $this->updateQuery = array("UPDATE person SET name = 'Natan Blabla', rg = '000000' WHERE id = 4");
 							$updateBinds = $this->bindParams;
-							$this->updateQuery = array("UPDATE " . $this->tableName . " SET " . "%coluna = %valor" . " WHERE " . $this->bindParams[$this->idField][0] . " = " . $this->bindParams[$this->idField][1]);
+
+							foreach ($updateBinds as $key => $updateBind) {
+
+								if (empty($updateBind[1])) {
+									echo $updateBind[1];
+									echo "hoy";
+								} else {
+									// print_r($updateBind);
+								}
+							}
+
+							$this->updateQuery = array("UPDATE " . $this->tableName . " SET " . "%coluna = %valor" . " WHERE " . $this->bindParams[$this->idField][0] . " = " . $this->bindParams[$this->idField][1], $updateBinds);
 							unset($updateBinds);
+
+							// foreach($userdata as $key => $value){
+							// 	$sql = $this->db->prepare("UPDATE `users` SET :key = :value WHERE `id` = :userid");
+							// 	$sql->bindParam(':key', $key);
+							// 	$sql->bindParam(':value', $value);
+							// 	$sql->bindParam(':userid', $userid);
+							// 	$sql->execute();
+							// 	);
+							// }
+
 
 							//Generate Delete
 							$deleteBinds = array($this->bindParams[$this->idField]);
@@ -158,5 +187,10 @@ class QueryService
 	public function get_tableName()
 	{
 		return $this->tableName;
+	}
+
+	public function get_idStatus()
+	{
+		return ($this->bindParams[$this->idField][1] != null) ? true : false;
 	}
 }

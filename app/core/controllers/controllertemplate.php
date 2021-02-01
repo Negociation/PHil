@@ -1,22 +1,22 @@
 <?php
+
 namespace Controllers;
 
 use Services\PessoaDAO;
 use DI;
 
-class ControllerTemplate{
-	
-	
+class ControllerTemplate
+{
+
+
+	protected $httpInput;
 	protected $dbConnection;
 	protected $container;
-	
-	function __construct(){
+
+	function __construct()
+	{
 		$this->container = (new DI\ContainerBuilder())->build();
 
-		//$this->dbConnection = $conn;
+		$this->httpInput = file_get_contents('php://input');
 	}
-	
 }
-
-
-?>

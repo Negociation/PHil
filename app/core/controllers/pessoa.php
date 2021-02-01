@@ -9,7 +9,6 @@ class Pessoa extends ControllerTemplate
 
 	public function default()
 	{
-
 		//Person Objects Retrieved from Database (can be one record or a array or records)
 
 		switch ($_SERVER['REQUEST_METHOD']) {
@@ -28,25 +27,21 @@ class Pessoa extends ControllerTemplate
 				break;
 
 			case 'POST':
-				$pessoaObject =  json_decode(file_get_contents('php://input'), true);
 
-				$postResult = ($this->container->get('Services\PessoaDAO'))->insertPessoa($pessoaObject);
+				$postResult = ($this->container->get('Services\PessoaDAO'))->insertPessoa($this->httpInput);
 
-				if ($postResult) {
+				if (!$postResult) {
 					http_response_code(200);
-					echo json_encode($pessoaObject);
+					// echo json_encode($postResult);
 				} else {
 					http_response_code(422);
 				}
 				break;
 
 			case 'PUT':
-				$pessoaObject =  json_decode(file_get_contents('php://input'), true);
+				$putResult = ($this->container->get('Services\PessoaDAO'))->updatePessoa($this->httpInput);
 
-				$putResult = ($this->container->get('Services\PessoaDAO'))->updatePessoa($pessoaObject);
-
-				print_r($putResult);
-				if ($putResult) {
+				if (!$putResult) {
 					http_response_code(200);
 					echo json_encode($putResult);
 				} else {
@@ -55,13 +50,11 @@ class Pessoa extends ControllerTemplate
 				break;
 
 			case 'DELETE':
-				$pessoaObject = json_decode(file_get_contents('php://input'), true);
+				$deleteResult = ($this->container->get('Services\PessoaDAO'))->deletePessoa($this->httpInput);
 
-				$putResult = ($this->container->get('Services\PessoaDAO'))->deletePessoa($pessoaObject);
-
-				if ($putResult) {
+				if ($deleteResult) {
 					http_response_code(200);
-					echo json_encode($putResult);
+					echo json_encode($deleteResult);
 				} else {
 					http_response_code(422);
 				}

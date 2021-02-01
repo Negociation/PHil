@@ -50,7 +50,7 @@ class DAOService
 
 		$result = $this->dbConnection->run($queryObject->get_selectIdQuery()[0], $queryObject->get_selectIdQuery()[1])->fetch(PDO::FETCH_ASSOC);
 
-		return $result;
+		return (is_array($result) ? $result : false);
 	}
 
 	/* INSERT */
@@ -60,7 +60,7 @@ class DAOService
 
 		$result = $this->dbConnection->run($queryObject->get_insertQuery()[0], $queryObject->get_insertQuery()[1]);
 
-		return (is_array($result) ? $result : false);
+		return (is_array($result) ? true : false);
 	}
 
 	/* UPDATE */
@@ -68,9 +68,13 @@ class DAOService
 	{
 		$queryObject = new QueryService($classObject);
 
-		$result = $this->dbConnection->run($queryObject->get_updateQuery()[0], $queryObject->get_updateQuery()[1]);
+		if ($queryObject->get_idStatus()) {
+			$result = $this->dbConnection->run($queryObject->get_updateQuery()[0], $queryObject->get_updateQuery()[1]);
 
-		return (is_array($result) ? $result : false);
+			return (is_array($result) ? true : false);
+		} else {
+			return false;
+		}
 	}
 
 	/* DELETE */

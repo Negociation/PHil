@@ -24,10 +24,9 @@ class PessoaDAO extends DAOService
 	{
 		$classObject = new PessoaFisica();
 		$classObject->setId($param);
-
 		$result = $this->getById($classObject);
 
-		return is_array($result) ? JsonService::encode($result, $classObject) : false;
+		return is_array($result) ? json_decode(JsonService::encode(array($result, $classObject))) : false;
 	}
 
 	public function getPessoaByCPF($param)
@@ -43,44 +42,55 @@ class PessoaDAO extends DAOService
 	{
 		$classObject = new PessoaFisica();
 
-		$classObject->setCompleteName($param["name"]);
-		$classObject->setCPF(isset($param["cpf"]) ? $param["cpf"] : '');
-		$classObject->setCNPJ(isset($param["cnpj"]) ? $param["cnpj"] : '');
-		$classObject->setRG(isset($param["rg"]) ? $param["rg"] : '');
-		$classObject->setUUID(isset($param["uuid"]) ? $param["uuid"] : md5(uniqid(rand(), true)));
-
-		return $this->insert($classObject);
+		if (($classObject = JsonService::decode($param, $classObject))) {
+			return $this->insert($classObject);
+		}
 	}
+
 
 	public function updatePessoa($param)
 	{
-		if (isset($param['id'])) {
+		$classObject = new PessoaFisica();
 
-			$personToUpdate = new PessoaFisica();
-			$personToUpdate->setId($param['id']);
-			$result = $this->getById($personToUpdate);
-
-			foreach ($param as $key => $row) {
-				if ($key != 'id')
-					if (!strcmp($row, $result[$key]) == 0)
-						$result[$key] = $param[$key];
-			}
-
-			foreach ($result as $key => $row) {
-				if ($key != 'id') {
-					$personToUpdate->__set($key, $result[$key]);
-				}
-			}
-			// return $this->update($personToUpdate);
-
-		} else {
-			echo json_encode(array("message" => "Error: ID not send on requisitions body"));
-			return false;
+		if (($classObject = JsonService::decode($param, $classObject))) {
+			return $this->update($classObject);
 		}
+
+		// if (isset($param['id'])) {
+
+		// 	$classObject = new PessoaFisica();
+		// 	$classObject->setId($param['id']);
+		// 	$getResult = $this->getById($classObject);
+
+		// 	if ($getResult) {
+
+		// 		JsonService::decode($param, $classObject);
+
+		// foreach ($param as $key => $row) {
+		// 	if ($key != 'id')
+		// 		if (!strcmp($row, $getResult[$key]) == 0) $getResult[$key] = $param[$key];
+		// }
+		// foreach ($getResult as $key => $row) {
+		// 	if ($key != 'id') {
+		// 		$classObject->__set($key, $getResult[$key]);
+		// 	}
+		// }
+
+		// 		return $this->update($classObject);
+		// 	} else {
+		// 		echo json_encode(array("message" => "Error: Data not found on BD"));
+		// 		return false;
+		// 	}
+		// } else {
+		// 	echo json_encode(array("message" => "Error: ID not send on requisitions body"));
+		// 	return false;
+		// }
 	}
 
 	public function deletePessoa($param)
 	{
+		$jsonObject = json_decode($param, true);
+
 		if (isset($param['id'])) {
 
 			$classObject = new PessoaFisica();
