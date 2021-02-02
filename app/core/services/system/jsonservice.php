@@ -188,7 +188,7 @@ class JsonService
 			}
 		} else {
 			//erro json
-			echo "JsonService::Decode(): Erro inválido";
+			throw new \Exception("JsonService::Decode(): cannot convert the input to JSON");
 			return false;
 		}
 	}

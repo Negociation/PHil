@@ -20,6 +20,7 @@ class PessoaDAO extends DAOService
 		return $resultArray;
 	}
 
+
 	public function getPessoaById($param)
 	{
 		$classObject = new PessoaFisica();
@@ -28,6 +29,7 @@ class PessoaDAO extends DAOService
 
 		return is_array($result) ? json_decode(JsonService::encode(array($result, $classObject))) : false;
 	}
+
 
 	public function getPessoaByCPF($param)
 	{
@@ -38,13 +40,14 @@ class PessoaDAO extends DAOService
 		return $this->getByParam($classObject, $classObject->getCPF());
 	}
 
+
 	public function insertPessoa($param)
 	{
 		$classObject = new PessoaFisica();
 
 		if (($classObject = JsonService::decode($param, $classObject))) {
 
-			return $this->insert($classObject);
+			return ($this->insert($classObject) ? json_decode($param) : false);
 		}
 	}
 
@@ -55,11 +58,10 @@ class PessoaDAO extends DAOService
 
 		if (($classObject = JsonService::decode($param, $classObject))) {
 
-			$result = $this->update($classObject);
-
-			return JsonService::encode(array($result, new PessoaFisica()));
+			return $this->update($classObject);
 		}
 	}
+
 
 	public function deletePessoa($param)
 	{
@@ -68,12 +70,12 @@ class PessoaDAO extends DAOService
 		if (isset($jsonObject['id'])) {
 
 			$classObject = new PessoaFisica();
-
 			$classObject->setId($jsonObject['id']);
 
-			return $this->delete($classObject);
+			$result = $this->getById($classObject);
+
+			return ($this->delete($classObject) ? $result : false);
 		} else {
-			echo json_encode(array("message" => "Error: ID not send on requisitions body"));
 			return false;
 		}
 	}

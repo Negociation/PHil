@@ -23,6 +23,7 @@ class Pessoa extends ControllerTemplate
 					echo json_encode($pessoaObjects);
 				} else {
 					http_response_code(422);
+					echo json_encode(array("message" => "Cannot get any data from database"));
 				}
 				break;
 
@@ -32,8 +33,10 @@ class Pessoa extends ControllerTemplate
 
 				if ($postResult) {
 					http_response_code(200);
+					echo json_encode($postResult);
 				} else {
 					http_response_code(422);
+					echo json_encode(array("message" => "Cannot insert data in database"));
 				}
 				break;
 
@@ -46,6 +49,7 @@ class Pessoa extends ControllerTemplate
 					echo json_encode($putResult);
 				} else {
 					http_response_code(422);
+					echo json_encode(array("message" => "ID not found. Cannot update data in database"));
 				}
 				break;
 
@@ -53,10 +57,12 @@ class Pessoa extends ControllerTemplate
 
 				$deleteResult = ($this->container->get('Services\PessoaDAO'))->deletePessoa($this->httpInput);
 
-				if ($deleteResult) {
+				if (is_array($deleteResult)) {
 					http_response_code(200);
+					echo json_encode($deleteResult);
 				} else {
 					http_response_code(422);
+					echo json_encode(array("message" => "ID not found. Cannot delete data from database"));
 				}
 				break;
 		}

@@ -16,6 +16,7 @@ class DAOService
 		$this->dbConnection = $dbConnection;
 	}
 
+
 	/* SELECTS */
 
 	protected function getAll($classObject)
@@ -26,6 +27,7 @@ class DAOService
 
 		return (is_array($result) ? $result : false);
 	}
+
 
 	protected function getByParam($classObject, $param)
 	{
@@ -44,6 +46,8 @@ class DAOService
 		return $result;
 	}
 
+
+
 	protected function getById($classObject)
 	{
 		$queryObject = new QueryService($classObject);
@@ -53,6 +57,7 @@ class DAOService
 		return (is_array($result) ? $result : false);
 	}
 
+
 	/* INSERT */
 	protected function insert($classObject)
 	{
@@ -60,8 +65,9 @@ class DAOService
 
 		$result = $this->dbConnection->run($queryObject->get_insertQuery()[0], $queryObject->get_insertQuery()[1]);
 
-		return ($result ? true : false);
+		return (is_object($result) ? true : false);
 	}
+
 
 	/* UPDATE */
 	protected function update($classObject)
@@ -72,11 +78,13 @@ class DAOService
 
 			$result = $this->dbConnection->run($queryObject->get_updateQuery()[0], $queryObject->get_updateQuery()[1]);
 
-			return ($result ? $this->getById($classObject) : false);
+			return (is_object($result) ? $this->getById($classObject) : false);
 		} else {
+
 			return false;
 		}
 	}
+
 
 	/* DELETE */
 	protected function delete($classObject)
