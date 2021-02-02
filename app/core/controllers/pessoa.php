@@ -38,6 +38,7 @@ class Pessoa extends ControllerTemplate
 				break;
 
 			case 'PUT':
+
 				$putResult = ($this->container->get('Services\PessoaDAO'))->updatePessoa($this->httpInput);
 
 				if ($putResult) {
@@ -49,6 +50,7 @@ class Pessoa extends ControllerTemplate
 				break;
 
 			case 'DELETE':
+
 				$deleteResult = ($this->container->get('Services\PessoaDAO'))->deletePessoa($this->httpInput);
 
 				if ($deleteResult) {

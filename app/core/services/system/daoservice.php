@@ -83,10 +83,8 @@ class DAOService
 	{
 		$queryObject = new QueryService($classObject);
 
-		print_r($queryObject->get_deleteQuery());
-
 		$result = $this->dbConnection->run($queryObject->get_deleteQuery()[0], $queryObject->get_deleteQuery()[1]);
 
-		return (is_array($result) ? $result : false);
+		return (is_object($result) ? true : false);
 	}
 }

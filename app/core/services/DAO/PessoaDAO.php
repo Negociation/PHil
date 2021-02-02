@@ -63,11 +63,13 @@ class PessoaDAO extends DAOService
 
 	public function deletePessoa($param)
 	{
-		if (isset($param['id'])) {
+		$jsonObject = json_decode($param, true);
+
+		if (isset($jsonObject['id'])) {
 
 			$classObject = new PessoaFisica();
 
-			$classObject->setId($param['id']);
+			$classObject->setId($jsonObject['id']);
 
 			return $this->delete($classObject);
 		} else {
